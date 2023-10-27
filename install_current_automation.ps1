@@ -158,11 +158,11 @@ function atualizaTerminalEmExecucao {
 
 #=========================================================================
 CriandoPastaInstalacao
-#InstalandoPython
-#IntalarNodeJs
-#InstandoJava
+InstalandoPython
+IntalarNodeJs
+InstandoJava
 InstallGit
-#instalandoAndroidStudio
-#setVariaviesSistema
-#atualizaTerminalEmExecucao
-#instalandoAppium
+instalandoAndroidStudio
+setVariaviesSistema
+atualizaTerminalEmExecucao
+instalandoAppium
