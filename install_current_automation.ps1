@@ -111,37 +111,34 @@ function setVariaviesSistema  {
 
     Write-Output "Conigurando as variaveis de ambiente usuario ..."
     [Environment]::SetEnvironmentVariable("Path", "C:\Users\$usuario\AppData\Local\Programs\Microsoft VS Code\bin" + ";C:\Users\$usuario\AppData\Local\Programs\Python\Python38\Scripts\" + ";C:\Users\teste\AppData\Local\Programs\Python\Python38\" + ";%USERPROFILE%\AppData\Local\Microsoft\WindowsApps" +";%JAVA_HOME%\bin" + ";%ANDROID_HOME%\bin" + ";%ANDROID_HOME%\platform-tools" + ";%ANDROID_HOME%\tools" + ";%ANDROID_HOME%\cmdline-tools" + ";C:\Users\$usuario\AppData\Local\Android\Sdk" + ";C:\Users\$usuario\AppData\Roaming\npm" + ";C:\Program Files\nodejs", [System.EnvironmentVariableTarget]::User)
+
+    $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
 }
 
 # instalando Appium
-function instalandoAppium {       
-
-    if( -not (Test-Path "C:\ProgramasAutomacao\installAppium.bat")){
-        Write-Output "Instalando o Appium na versao 1.22.3 Aguarde..."
-        Set-Location "C:\programasAutomacao"
-        ni -n installAppium.bat -v 'npm install -g appium@1.22.3' 
-        Sleep(2)
-    } else {
-        Write-Output "Arquivo installAppium.bat existente! "
-    }
+function instalandoAppium {  
     
-    if(-not (Test-Path "C:\ProgramasAutomacao\installRequirements.bat")){
-        Write-Output "Instalando o Requirements Aguarde..."
-        Set-Location "C:\programasAutomacao"
-        ni -n installRequirements.bat -v 'pip install -r requirements.txt' 
-        Sleep(2)
-    } else {
-        Write-Output "Arquivo installRequirements.bat existente! "
-    }
+    npm install -g appium@1.22.3
+    python.exe -m pip install --upgrade pip
+    #pip install -r requirements.txt
+    pip install robotframework
+    pip install robotframework-seleniumlibray
+
+}
+
+function reiniciarPÇ {
+    #Restart-Computer
+    Exit-PSSession
 }
 
 
 
 #=========================================================================
 CriandoPastaInstalacao
-InstalandoPython
-IntalarNodeJs
-InstandoJava
-instalandoAndroidStudio
+#InstalandoPython
+#IntalarNodeJs
+#InstandoJava
+#instalandoAndroidStudio
 setVariaviesSistema
+reiniciarPÇ
 #instalandoAppium
