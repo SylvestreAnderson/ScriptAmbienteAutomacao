@@ -115,9 +115,25 @@ function setVariaviesSistema  {
 
 # instalando Appium
 function instalandoAppium {
-    Write-Output "Instalando o Appium na versão 1.22.3"
-    tart-Process npm install -g appium@1.22.3 
-    tart-Process pip install -r requirements.txt
+       
+
+    if( -not (Test-Path "C:\ProgramasAutomacao\installAppium.bat")){
+        Write-Output "Instalando o Appium na versao 1.22.3 Aguarde..."
+        Set-Location "C:\programasAutomacao"
+        ni -n installAppium.bat -v 'npm install -g appium@1.22.3' 
+        Sleep(2)
+    } else {
+        Write-Output "Arquivo installAppium.bat existente! "
+    }
+    
+    if(-not (Test-Path "C:\ProgramasAutomacao\installRequirements.bat")){
+        Write-Output "Instalando o Requirements Aguarde..."
+        Set-Location "C:\programasAutomacao"
+        ni -n installRequirements.bat -v 'pip install -r requirements.txt' 
+        Sleep(2)
+    } else {
+        Write-Output "Arquivo installRequirements.bat existente! "
+    }
 }
 
 
