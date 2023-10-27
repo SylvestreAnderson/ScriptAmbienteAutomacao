@@ -110,12 +110,11 @@ function setVariaviesSistema  {
         
 
     Write-Output "Conigurando as variaveis de ambiente usuario ..."
-    [Environment]::SetEnvironmentVariable("Path", "C:\Users\$usuario\AppData\Local\Programs\Microsoft VS Code\bin" + ";C:\Users\$usuario\AppData\Local\Programs\Python\Python38" + ";C:\Users\$usuario\AppData\Local\Programs\Python\Python38\Script" + ";%USERPROFILE%\AppData\Local\Microsoft\WindowsApps" +";%JAVA_HOME%\bin" + ";%ANDROID_HOME%\bin" + ";%ANDROID_HOME%\platform-tools" + ";%ANDROID_HOME%\tools" + ";%ANDROID_HOME%\cmdline-tools" + ";C:\Users\$usuario\AppData\Local\Android\Sdk" + ";C:\Users\$usuario\AppData\Roaming\npm" + ";C:\Program Files\nodejs", [System.EnvironmentVariableTarget]::User)
+    [Environment]::SetEnvironmentVariable("Path", "C:\Users\$usuario\AppData\Local\Programs\Microsoft VS Code\bin" + ";C:\Users\$usuario\AppData\Local\Programs\Python\Python38\Scripts\" + ";C:\Users\teste\AppData\Local\Programs\Python\Python38\" + ";%USERPROFILE%\AppData\Local\Microsoft\WindowsApps" +";%JAVA_HOME%\bin" + ";%ANDROID_HOME%\bin" + ";%ANDROID_HOME%\platform-tools" + ";%ANDROID_HOME%\tools" + ";%ANDROID_HOME%\cmdline-tools" + ";C:\Users\$usuario\AppData\Local\Android\Sdk" + ";C:\Users\$usuario\AppData\Roaming\npm" + ";C:\Program Files\nodejs", [System.EnvironmentVariableTarget]::User)
 }
 
 # instalando Appium
-function instalandoAppium {
-       
+function instalandoAppium {       
 
     if( -not (Test-Path "C:\ProgramasAutomacao\installAppium.bat")){
         Write-Output "Instalando o Appium na versao 1.22.3 Aguarde..."
@@ -144,5 +143,5 @@ InstalandoPython
 IntalarNodeJs
 InstandoJava
 instalandoAndroidStudio
-instalandoAppium
-#setVariaviesSistema
+setVariaviesSistema
+#instalandoAppium
