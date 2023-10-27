@@ -28,7 +28,7 @@ function InstalandoPython {
             if(Test-Path "C:\programasAutomacao\Python3.8.8.exe"){
                 Write-Output "Instalando o Python3.8.8 na maquina Aguarde..."
                 Start-Process "C:\programasAutomacao\Python3.8.8.exe" -ArgumentList "/quiet"
-                Write-Output "Instalacao o Python3.8.8 concluida"
+                Write-Output "Instalacao do Python3.8.8 concluida"
             }
     }  
 }
@@ -51,7 +51,7 @@ function IntalarNodeJs {
                 Start-Process msiexec "/i C:\programasAutomacao\node-v18.18.2-x64.msi /qn" -Wait
                 $arguments = "/i C:\programasAutomacao\Nodejs.msi /quiet"
                 Start-Process msiexec.exe -ArgumentList $arguments -Wait
-                Write-Output "Instalaçao do Node.js concluida!"
+                Write-Output "Instalacao do Node.js concluida!"
             }
            
         }
@@ -65,12 +65,12 @@ function InstandoJava {
     } else {
         Set-Location "C:\programasAutomacao"
         if(-not (Test-Path "C:\programasAutomacao\java8u392")){
-            Write-Output "Baixando o Java na versao 1.8.0_392-392"
+            Write-Output "Baixando o Java na versao 1.8.0_392-392 Aguarde..."
             Invoke-WebRequest -Uri "https://builds.openlogic.com/downloadJDK/openlogic-openjdk/8u392-b08/openlogic-openjdk-8u392-b08-windows-x64.msi" -OutFile "java1.8.0_392-392.msi" -UseBasicParsing
         } 
 
         if(Test-Path "C:\programasAutomacao\java1.8.0_392-392.msi"){
-            Write-Output "Instalando o java8u392 na maquina!"
+            Write-Output "Instalando o java8u392 na maquina Aguarde..."
             Start-Process "C:\programasAutomacao\java1.8.0_392-392.msi" -ArgumentList "/quiet"
             $arguments = "/i C:\programasAutomacao\java1.8.0_392-392.msi /quiet"
             Start-Process msiexec.exe -ArgumentList $arguments -Wait
@@ -91,7 +91,7 @@ function instalandoAndroidStudio {
         }
 
         if(Test-Path "C:\programasAutomacao\AndroidStudio.exe"){
-            Write-Output "Instalando o Android Studio na maquina!"
+            Write-Output "Instalando o Android Studio na maquina Aguarde.."
             Start-Process "C:\programasAutomacao\AndroidStudio.exe" -ArgumentList "/quiet"
             $Install = Start-Process "C:\programasAutomacao\AndroidStudio.exe " -ArgumentList "/S" -PassThru
             while ($Install.ExitCode -eq $null){Sleep 1} 
@@ -107,6 +107,7 @@ function setVariaviesSistema  {
     Write-Output "Conigurando as variaveis de ambiente sistema ..."
     [Environment]::SetEnvironmentVariable('JAVA_HOME', 'C:\Program Files\OpenLogic\jdk-8.0.392.08-hotspot\bin', 'Machine')
     [Environment]::SetEnvironmentVariable('ANDROID_HOME', 'C:\Users\$usuario\AppData\Local\Android\Sdk', 'Machine')  
+    [Environment]::SetEnvironmentVariable('PAth', '%SystemRoot%\system32' + ';%SystemRoot%' + ';%SystemRoot%\System32\Wbem' + ';%SYSTEMROOT%\System32\WindowsPowerShell\v1.0\' + ';%SYSTEMROOT%\System32\OpenSSH\' + 'C:\Program Files\Git\cmd' + 'C:\Program Files\nodejs\', 'Machine')  
         
 
     Write-Output "Conigurando as variaveis de ambiente usuario ..."
@@ -121,10 +122,10 @@ function instalandoAppium {
 }
 
 
-#CriandoPastaInstalacao
-#InstalandoPython
-#IntalarNodeJs
-#InstandoJava
-#instalandoAndroidStudio
+CriandoPastaInstalacao
+InstalandoPython
+IntalarNodeJs
+InstandoJava
+instalandoAndroidStudio
 #instalandoAppium
-#setVariaviesSistema
+setVariaviesSistema
