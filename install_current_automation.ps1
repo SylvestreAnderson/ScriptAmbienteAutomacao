@@ -41,14 +41,13 @@ function IntalarNodeJs {
     } else {
         Set-Location "C:\programasAutomacao"
         if(Test-Path -Path "C:\programasAutomacao"){
-            if(-not (Test-Path "C:\programasAutomacao\node-v18.18.2-x64.msi")){
+            if(-not (Test-Path "C:\programasAutomacao\node-v18.18.2-x64")){
                 Write-Output "Baixando o instalador do NodeJs versao 18.18.2 Aguarde..."
                 Invoke-WebRequest -Uri "https://nodejs.org/dist/v18.18.2/node-v18.18.2-x64.msi" -OutFile "node-v18.18.2-x64.msi" -UseBasicParsing
             }
     
             if(Test-Path "C:\programasAutomacao\node-v18.18.2-x64.msi"){
                 Write-Output "Instalando o Node.js na maquina Aguarde..."
-                Start-Process msiexec "/i C:\programasAutomacao\node-v18.18.2-x64.msi /qn" -Wait
                 $arguments = "/i C:\programasAutomacao\Nodejs.msi /quiet"
                 Start-Process msiexec.exe -ArgumentList $arguments -Wait
                 Write-Output "Instalacao do Node.js concluida!"
@@ -71,12 +70,35 @@ function InstandoJava {
 
         if(Test-Path "C:\programasAutomacao\java1.8.0_392-392.msi"){
             Write-Output "Instalando o java8u392 na maquina Aguarde..."
-            Start-Process "C:\programasAutomacao\java1.8.0_392-392.msi" -ArgumentList "/quiet"
             $arguments = "/i C:\programasAutomacao\java1.8.0_392-392.msi /quiet"
             Start-Process msiexec.exe -ArgumentList $arguments -Wait
             Write-Output "Instalacao do Java concluida!"
         }
     }   
+}
+
+
+#Instalando o Vscode
+function InstallGit {
+    if(Test-Path -Path "C:\Program Files\Git1"){
+        Write-Output "Git ja instalado na maquina!"
+    } else {
+        Set-Location "C:\programasAutomacao"
+        if(Test-Path -Path "C:\programasAutomacao"){
+            if(-not (Test-Path "C:\programasAutomacao\VSCodeUserSetup-x64-1.83.1")){
+                Write-Output "Baixando o instalador do Git Aguarde..."
+                Invoke-WebRequest -Uri "https://github.com/git-for-windows/git/releases/download/v2.42.0.windows.2/Git-2.42.0.2-64-bit.exe" -OutFile "Git-2.42.0.2-64-bit" -UseBasicParsing
+            }
+    
+            if(Test-Path "C:\programasAutomacao\Git-2.42.0.2-64-bit"){
+                Write-Output "Instalando o Git na maquina Aguarde..."
+                Start-Process "C:\programasAutomacao\Git-2.42.0.2-64-bit" -ArgumentList "/quiet"
+                Write-Output "Instalacao do Git concluida!"
+            }
+           
+        }
+    } 
+    
 }
 
 function instalandoAndroidStudio {
@@ -112,7 +134,7 @@ function setVariaviesSistema  {
     Write-Output "Conigurando as variaveis de ambiente usuario ..."
     [Environment]::SetEnvironmentVariable("Path", "C:\Users\$usuario\AppData\Local\Programs\Microsoft VS Code\bin" + ";C:\Users\$usuario\AppData\Local\Programs\Python\Python38\Scripts\" + ";C:\Users\teste\AppData\Local\Programs\Python\Python38\" + ";%USERPROFILE%\AppData\Local\Microsoft\WindowsApps" +";%JAVA_HOME%\bin" + ";%ANDROID_HOME%\bin" + ";%ANDROID_HOME%\platform-tools" + ";%ANDROID_HOME%\tools" + ";%ANDROID_HOME%\cmdline-tools" + ";C:\Users\$usuario\AppData\Local\Android\Sdk" + ";C:\Users\$usuario\AppData\Roaming\npm" + ";C:\Program Files\nodejs", [System.EnvironmentVariableTarget]::User)
 
-    $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
+   
 }
 
 # instalando Appium
@@ -122,13 +144,14 @@ function instalandoAppium {
     python.exe -m pip install --upgrade pip
     #pip install -r requirements.txt
     pip install robotframework
-    pip install robotframework-seleniumlibray
+    pip install robotframework-seleniumlibrary
+    pip install --upgrade robotframework-seleniumlibrary
+    pip install --upgrade robotframework-appiumlibrary
 
 }
 
-function reiniciarPÇ {
-    #Restart-Computer
-    Exit-PSSession
+function atualizaTerminalEmExecucao {
+    $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
 }
 
 
@@ -138,7 +161,8 @@ CriandoPastaInstalacao
 #InstalandoPython
 #IntalarNodeJs
 #InstandoJava
+InstallGit
 #instalandoAndroidStudio
-setVariaviesSistema
-reiniciarPÇ
+#setVariaviesSistema
+#atualizaTerminalEmExecucao
 #instalandoAppium
