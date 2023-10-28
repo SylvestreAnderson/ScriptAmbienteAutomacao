@@ -41,14 +41,14 @@ function IntalarNodeJs {
     } else {
         Set-Location "C:\programasAutomacao"
         if(Test-Path -Path "C:\programasAutomacao"){
-            if(-not (Test-Path "C:\programasAutomacao\node-v18.18.2-x64")){
+            if(-not (Test-Path "C:\programasAutomacao\node-v18.18.2-x64.msi")){
                 Write-Output "Baixando o instalador do NodeJs versao 18.18.2 Aguarde..."
                 Invoke-WebRequest -Uri "https://nodejs.org/dist/v18.18.2/node-v18.18.2-x64.msi" -OutFile "node-v18.18.2-x64.msi" -UseBasicParsing
             }
     
             if(Test-Path "C:\programasAutomacao\node-v18.18.2-x64.msi"){
                 Write-Output "Instalando o Node.js na maquina Aguarde..."
-                $arguments = "/i C:\programasAutomacao\Nodejs.msi /quiet"
+                $arguments = "/i C:\programasAutomacao\node-v18.18.2-x64.msi /quiet"
                 Start-Process msiexec.exe -ArgumentList $arguments -Wait
                 Write-Output "Instalacao do Node.js concluida!"
             }
@@ -78,25 +78,25 @@ function InstandoJava {
 }
 
 
-#Instalando o Vscode
+#Instalando o Git
 function InstallGit {
-    if(Test-Path -Path "C:\Program Files\Git1"){
+    if(Test-Path -Path "C:\Program Files\Git"){
         Write-Output "Git ja instalado na maquina!"
     } else {
         Set-Location "C:\programasAutomacao"
-        if(Test-Path -Path "C:\programasAutomacao"){
-            if(-not (Test-Path "C:\programasAutomacao\VSCodeUserSetup-x64-1.83.1")){
+        
+            if(-not (Test-Path "C:\programasAutomacao\Git-2.42.0.2-64-bit.exe")){
                 Write-Output "Baixando o instalador do Git Aguarde..."
-                Invoke-WebRequest -Uri "https://github.com/git-for-windows/git/releases/download/v2.42.0.windows.2/Git-2.42.0.2-64-bit.exe" -OutFile "Git-2.42.0.2-64-bit" -UseBasicParsing
+                Invoke-WebRequest -Uri "https://github.com/git-for-windows/git/releases/download/v2.42.0.windows.2/Git-2.42.0.2-64-bit.exe" -OutFile "Git-2.42.0.2-64-bit.exe" -UseBasicParsing
             }
     
-            if(Test-Path "C:\programasAutomacao\Git-2.42.0.2-64-bit"){
+            if(Test-Path "C:\programasAutomacao\Git-2.42.0.2-64-bit.exe"){
                 Write-Output "Instalando o Git na maquina Aguarde..."
-                Start-Process "C:\programasAutomacao\Git-2.42.0.2-64-bit" -ArgumentList "/quiet"
+                $Install = Start-Process "C:\programasAutomacao\Git-2.42.0.2-64-bit.exe " -ArgumentList "/S" -PassThru
+                while ($Install.ExitCode -eq $null){Sleep 1}
                 Write-Output "Instalacao do Git concluida!"
             }
            
-        }
     } 
     
 }
@@ -132,7 +132,7 @@ function setVariaviesSistema  {
         
 
     Write-Output "Conigurando as variaveis de ambiente usuario ..."
-    [Environment]::SetEnvironmentVariable("Path", "C:\Users\$usuario\AppData\Local\Programs\Microsoft VS Code\bin" + ";C:\Users\$usuario\AppData\Local\Programs\Python\Python38\Scripts\" + ";C:\Users\teste\AppData\Local\Programs\Python\Python38\" + ";%USERPROFILE%\AppData\Local\Microsoft\WindowsApps" +";%JAVA_HOME%\bin" + ";%ANDROID_HOME%\bin" + ";%ANDROID_HOME%\platform-tools" + ";%ANDROID_HOME%\tools" + ";%ANDROID_HOME%\cmdline-tools" + ";C:\Users\$usuario\AppData\Local\Android\Sdk" + ";C:\Users\$usuario\AppData\Roaming\npm" + ";C:\Program Files\nodejs", [System.EnvironmentVariableTarget]::User)
+    [Environment]::SetEnvironmentVariable("Path", "C:\Users\$usuario\AppData\Local\Programs\Microsoft VS Code\bin" + ";C:\Users\$usuario\AppData\Local\Programs\Python\Python38\Scripts\" + ";C:\Users\$usuario\AppData\Local\Programs\Python\Python38\" + ";%USERPROFILE%\AppData\Local\Microsoft\WindowsApps" +";%JAVA_HOME%\bin" + ";%ANDROID_HOME%\bin" + ";%ANDROID_HOME%\platform-tools" + ";%ANDROID_HOME%\tools" + ";%ANDROID_HOME%\cmdline-tools" + ";C:\Users\$usuario\AppData\Local\Android\Sdk" + ";C:\Users\$usuario\AppData\Roaming\npm" + ";C:\Program Files\nodejs", [System.EnvironmentVariableTarget]::User)
 
    
 }
