@@ -163,7 +163,8 @@ function limpandoAmbiente {
     Write-Output "Removendo a pasta ProgramasAutomacao"
     Write-Output "Removendo os arquivos desnecessarios Aguarde..."
     Set-Location "C:\"
-    Remove-Item -Path C:\ProgramasAutomacao -Recurse -Force
+    Remove-Item -Path C:\ProgramasAutomacao -Force -Recurse 
+    
     Write-Output "Instalacao do Ambiente de Automacao concluido!"
     
 }
@@ -174,10 +175,10 @@ CriandoPastaInstalacao
 InstalandoPython
 IntalarNodeJs
 InstandoJava
-#InstallGit
-#instalandoAndroidStudio
+InstallGit
+instalandoAndroidStudio
 setVariaviesSistema
-#atualizaTerminalEmExecucao
-#instalandoAppium
+atualizaTerminalEmExecucao
+instalandoAppium
 atualizaTerminalEmExecucao
 limpandoAmbiente
