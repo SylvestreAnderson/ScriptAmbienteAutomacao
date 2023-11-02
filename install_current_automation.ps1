@@ -92,7 +92,9 @@ function InstallGit {
     
             if(Test-Path "C:\programasAutomacao\Git-2.42.0.2-64-bit.exe"){
                 Write-Output "Instalando o Git na maquina Aguarde..."
-                $Install = Start-Process "C:\programasAutomacao\Git-2.42.0.2-64-bit.exe " -ArgumentList "/S" -PassThru
+                $Install = Start-Process 'C:\programasAutomacao\Git-2.42.0.2-64-bit.exe' -ArgumentList '/VERYSILENT /NORESTART /NOCANCEL /SP- /CLOSEAPPLICATIONS /RESTARTAPPLICATIONS /COMPONENTS="icons,ext\reg\shellhere,assoc,assoc_sh"' -Wait -PassThru
+                #Start-Process "C:\programasAutomacao\Git-2.42.0.2-64-bit.exe " -ArgumentList "/S" -PassThru
+
                 while ($Install.ExitCode -eq $null){Sleep 1}
                 Write-Output "Instalacao do Git concluida!"
             }
@@ -151,9 +153,20 @@ function instalandoAppium {
 }
 
 function atualizaTerminalEmExecucao {
+    Write-Output "Atualizando o terminal!"
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
 }
 
+
+function limpandoAmbiente {
+    sleep (3)
+    Write-Output "Removendo a pasta ProgramasAutomacao"
+    Write-Output "Removendo os arquivos desnecessarios Aguarde..."
+    Set-Location "C:\"
+    Remove-Item -Path C:\ProgramasAutomacao -Recurse -Force
+    Write-Output "Instalacao do Ambiente de Automacao concluido!"
+    
+}
 
 
 #=========================================================================
@@ -161,8 +174,10 @@ CriandoPastaInstalacao
 InstalandoPython
 IntalarNodeJs
 InstandoJava
-InstallGit
-instalandoAndroidStudio
+#InstallGit
+#instalandoAndroidStudio
 setVariaviesSistema
+#atualizaTerminalEmExecucao
+#instalandoAppium
 atualizaTerminalEmExecucao
-instalandoAppium
+limpandoAmbiente
