@@ -103,6 +103,7 @@ function InstallGit {
     
 }
 
+# Instalação do Android Studio
 function instalandoAndroidStudio {
     if(Test-Path "C:\Program Files\Android"){
         Write-Output "Android Studio ja esta instalado!"
@@ -122,6 +123,27 @@ function instalandoAndroidStudio {
         }
     }
     
+}
+
+function installAppiumInstpector {
+        if(Test-Path "C:\Users\$usuario\AppData\Local\Programs\Appium Inspector"){
+        Write-Output "Appium Inspector ja esta instalado!"
+    } else {
+        Set-Location "C:\programasAutomacao"
+
+        if(-not (Test-Path "C:\programasAutomacao\Appium-Inspector-windows-2023.11.1.exe")){
+            Write-Output "Baixando o Appium Inspector Aguarde..."
+            Invoke-WebRequest -Uri "https://github.com/appium/appium-inspector/releases/download/v2023.11.1/Appium-Inspector-windows-2023.11.1.exe" -OutFile "Appium-Inspector-windows-2023.11.1.exe" -UseBasicParsing 
+        }
+
+        if(Test-Path "C:\programasAutomacao\Appium-Inspector-windows-2023.11.1.exe"){
+            Write-Output "Instalando o Appium Inspector na maquina Aguarde..."
+            $Install = Start-Process "C:\programasAutomacao\Appium-Inspector-windows-2023.11.1.exe" -ArgumentList "/S" -PassThru
+            while ($Install.ExitCode -eq $null){Sleep 1} 
+            Write-Output "Instalacao do Appium Inspector concluido!"
+        }
+    }
+        
 }
 
 #Setando as variaveis de ambiente
@@ -180,5 +202,6 @@ instalandoAndroidStudio
 setVariaviesSistema
 atualizaTerminalEmExecucao
 instalandoAppium
+installAppiumInstpector
 atualizaTerminalEmExecucao
 limpandoAmbiente
