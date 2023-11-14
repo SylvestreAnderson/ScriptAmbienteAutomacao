@@ -166,7 +166,7 @@ function instalandoAppium {
     if(Test-Path -Path "C:\Program Files\nodejs"){
         Write-Output "Instalando o Appium na maquina Aguarde..."
         npm install -g appium@1.22.3
-        npm i appium-doctor4.3.1 -g
+        npm i appium-doctor -g
     } else {
         Write-Output "Node nao instalado na maquina!"
     }
