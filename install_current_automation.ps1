@@ -40,6 +40,7 @@ function IntalarNodeJs {
         Write-Output "Nodejs ja instalado na maquina!"
     } else {
         Set-Location "C:\programasAutomacao"
+        sleep (3)
         if(Test-Path -Path "C:\programasAutomacao"){
             if(-not (Test-Path "C:\programasAutomacao\node-v18.18.2-x64.msi")){
                 Write-Output "Baixando o instalador do NodeJs versao 18.18.2 Aguarde..."
@@ -93,8 +94,6 @@ function InstallGit {
             if(Test-Path "C:\programasAutomacao\Git-2.42.0.2-64-bit.exe"){
                 Write-Output "Instalando o Git na maquina Aguarde..."
                 $Install = Start-Process 'C:\programasAutomacao\Git-2.42.0.2-64-bit.exe' -ArgumentList '/VERYSILENT /NORESTART /NOCANCEL /SP- /CLOSEAPPLICATIONS /RESTARTAPPLICATIONS /COMPONENTS="icons,ext\reg\shellhere,assoc,assoc_sh"' -Wait -PassThru
-                #Start-Process "C:\programasAutomacao\Git-2.42.0.2-64-bit.exe " -ArgumentList "/S" -PassThru
-
                 while ($Install.ExitCode -eq $null){Sleep 1}
                 Write-Output "Instalacao do Git concluida!"
             }
@@ -152,7 +151,7 @@ function setVariaviesSistema  {
     Write-Output "Conigurando as variaveis de ambiente sistema ..."
     [Environment]::SetEnvironmentVariable('JAVA_HOME', 'C:\Program Files\OpenLogic\jdk-8.0.392.08-hotspot\', 'Machine')
     [Environment]::SetEnvironmentVariable("ANDROID_HOME", "C:\Users\" + $usuario + "\AppData\Local\Android\Sdk", "Machine")  
-    [Environment]::SetEnvironmentVariable('Path', '%SystemRoot%\system32' + ';%SystemRoot%' + ';%SystemRoot%\System32\Wbem' + ';%SYSTEMROOT%\System32\WindowsPowerShell\v1.0\' + ';%SYSTEMROOT%\System32\OpenSSH\' + ';C:\Program Files\Git\cmd' + ';C:\Program Files\nodejs\', 'Machine')  
+    [Environment]::SetEnvironmentVariable('Path', '%SystemRoot%\system32' + ';%SystemRoot%' + ';%SystemRoot%\System32\Wbem' + ';%SYSTEMROOT%\System32\WindowsPowerShell\v1.0\' + ';%SYSTEMROOT%\System32\OpenSSH\' + ';C:\Program Files\OpenLogic\jdk-8.0.392.08-hotspot\bin' + ';C:\Program Files\Git\cmd' + ';C:\Program Files\nodejs\', 'Machine')  
         
 
     Write-Output "Conigurando as variaveis de ambiente usuario ..."
@@ -164,14 +163,35 @@ function setVariaviesSistema  {
 # instalando Appium
 function instalandoAppium {  
     
-    npm install -g appium@1.22.3
-    python.exe -m pip install --upgrade pip
-    #pip install -r requirements.txt
-    pip install robotframework
-    pip install robotframework-seleniumlibrary
-    pip install --upgrade robotframework-seleniumlibrary
-    pip install --upgrade robotframework-appiumlibrary
+    if(Test-Path -Path "C:\Program Files\nodejs"){
+        Write-Output "Instalando o Appium na maquina Aguarde..."
+        npm install -g appium@1.22.3
+        npm i appium-doctor4.3.1 -g
+    } else {
+        Write-Output "Node nao instalado na maquina!"
+    }
+}
 
+function instalandoPacotesRobot {
+
+    if(Test-Path "C:\Users\$usuario\AppData\Local\Programs\Python\Python38"){
+        Write-Output "Atualizando a versão do Pip na maquina Aguarde..."
+        python.exe -m pip install --upgrade pip
+
+        Write-Output "Instalando os pacotes do Robot Aguarde..."
+        #pip install -r requirements.txt
+        pip install robotframework
+        pip install robotframework-seleniumlibrary
+        pip install robotframework-requests
+
+        Write-Output "Atualizando as bibliotecas do Robot Aguarde..."
+        pip install --upgrade robotframework-seleniumlibrary
+        pip install --upgrade robotframework-appiumlibrary
+        pip install --upgrade robotframework-requests
+    } else {
+        Write-Output "Python nao instalado na Maquina"
+    }
+    
 }
 
 function atualizaTerminalEmExecucao {
@@ -203,5 +223,6 @@ setVariaviesSistema
 atualizaTerminalEmExecucao
 instalandoAppium
 installAppiumInstpector
+instalandoPacotesRobot
 atualizaTerminalEmExecucao
 limpandoAmbiente
