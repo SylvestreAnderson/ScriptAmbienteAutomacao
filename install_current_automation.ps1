@@ -11,28 +11,7 @@ function CriandoPastaInstalacao {
         mkdir "C:\ProgramasAutomacao"
         Write-Output "Pasta ProgramasAutomacao Criada com sucesso!"
     }         
-}   
-
-## Baixando e instalado o Python 3.8.8
-function InstalandoPython {
-    if(Test-Path "C:\Users\$usuario\AppData\Local\Programs\Python\Python38"){
-        Write-Output "Python 3.8.8 ja instalado na maquina!"
-    } else {
-        Set-Location "C:\programasAutomacao"
-
-            if(-not (Test-Path "C:\programasAutomacao\Python3.8.8.exe")){
-                Write-Output "Baixando o instalador do Python3.8.8.exe Aguarde..."
-                Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.8.8/python-3.8.8-amd64.exe" -OutFile "Python3.8.8.exe" -UseBasicParsing
-            }
-    
-            if(Test-Path "C:\programasAutomacao\Python3.8.8.exe"){
-                Write-Output "Instalando o Python3.8.8 na maquina Aguarde..."
-                Start-Process "C:\programasAutomacao\Python3.8.8.exe" -ArgumentList "/quiet"
-                Write-Output "Instalacao do Python3.8.8 concluida"
-            }
-    }  
-}
-
+} 
 
 ## intalando o node
 function IntalarNodeJs {
@@ -57,6 +36,27 @@ function IntalarNodeJs {
         }
     }     
 }
+
+## Baixando e instalado o Python 3.8.8
+function InstalandoPython {
+    if(Test-Path "C:\Users\$usuario\AppData\Local\Programs\Python\Python38"){
+        Write-Output "Python 3.8.8 ja instalado na maquina!"
+    } else {
+        Set-Location "C:\programasAutomacao"
+
+            if(-not (Test-Path "C:\programasAutomacao\Python3.8.8.exe")){
+                Write-Output "Baixando o instalador do Python3.8.8.exe Aguarde..."
+                Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.8.8/python-3.8.8-amd64.exe" -OutFile "Python3.8.8.exe" -UseBasicParsing
+            }
+    
+            if(Test-Path "C:\programasAutomacao\Python3.8.8.exe"){
+                Write-Output "Instalando o Python3.8.8 na maquina Aguarde..."
+                Start-Process "C:\programasAutomacao\Python3.8.8.exe" -ArgumentList "/quiet"
+                Write-Output "Instalacao do Python3.8.8 concluida"
+            }
+    }  
+}
+
 
 #instalando o Java
 function InstandoJava {
@@ -235,16 +235,16 @@ function limpandoAmbiente {
 
 
 #=========================================================================
-#CriandoPastaInstalacao
-#InstalandoPython
-#IntalarNodeJs
-#InstandoJava
-#InstallGit
-#instalandoAndroidStudio
+CriandoPastaInstalacao
+InstalandoPython
+IntalarNodeJs
+InstandoJava
+InstallGit
+instalandoAndroidStudio
 setVariaviesSistema
-#atualizaTerminalEmExecucao
-#instalandoAppium
-#installAppiumInstpector
-#instalandoPacotesRobot
-#atualizaTerminalEmExecucao
-#limpandoAmbiente
+atualizaTerminalEmExecucao
+instalandoAppium
+installAppiumInstpector
+instalandoPacotesRobot
+atualizaTerminalEmExecucao
+limpandoAmbiente
