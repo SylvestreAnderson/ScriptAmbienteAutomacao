@@ -152,34 +152,71 @@ function setVariaviesSistema  {
     [Environment]::SetEnvironmentVariable('JAVA_HOME', 'C:\Program Files\OpenLogic\jdk-8.0.392.08-hotspot\', 'Machine')
     [Environment]::SetEnvironmentVariable("ANDROID_HOME", "C:\Users\" + $usuario + "\AppData\Local\Android\Sdk", "Machine")
     
-    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";C:\Program Files\OpenLogic\jdk-8.0.392.08-hotspot\bin", [EnvironmentVariableTarget]::Machine)
+    $valida_Variavel_Path_Global = [Environment]::GetEnvironmentVariable("Path", "Machine")
 
-    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";C:\Program Files\Git\cmd", [EnvironmentVariableTarget]::Machine)
+    $validaVariavelStringGlobal = $valida_Variavel_Path_Global -split ";"
 
-    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";C:\Program Files\nodejs\", [EnvironmentVariableTarget]::Machine)
+    if(-not ($validaVariavelStringGlobal -contains "C:\Program Files\OpenLogic\jdk-8.0.392.08-hotspot\bin")){
+        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";C:\Program Files\OpenLogic\jdk-8.0.392.08-hotspot\bin", [EnvironmentVariableTarget]::Machine)
+    }
+
+    if(-not ($validaVariavelStringGlobal -contains "C:\Program Files\Git\cmd")){
+        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";C:\Program Files\Git\cmd", [EnvironmentVariableTarget]::Machine)
+    }
+    
+    if(-not ($validaVariavelStringGlobal -contains "C:\Program Files\nodejs\")){
+        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";C:\Program Files\nodejs\", [EnvironmentVariableTarget]::Machine)
+    }
+
+    
 
     
     Write-Output "Conigurando as variaveis de ambiente usuario ..."
 
-    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";C:\Users\$usuario\AppData\Local\Programs\Python\Python38\Scripts\", [EnvironmentVariableTarget]::User) 
+    $valida_Variavel_Path_User = [Environment]::GetEnvironmentVariable("Path", "User")
 
-    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";C:\Users\$usuario\AppData\Local\Programs\Python\Python38\", [EnvironmentVariableTarget]::User) 
+    $validaVariavelString = $Valida_Variavel_Path_User -split ";"
 
-    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%JAVA_HOME%\bin", [EnvironmentVariableTarget]::User)
+    if(-not ($validaVariavelString -contains "C:\Users\$usuario\AppData\Local\Programs\Python\Python38\Scripts\")){
+        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";C:\Users\$usuario\AppData\Local\Programs\Python\Python38\Scripts\", [EnvironmentVariableTarget]::User) 
+    }
 
-    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\bin", [EnvironmentVariableTarget]::User)
+    if (-not ($validaVariavelString -contains "C:\Users\$usuario\AppData\Local\Programs\Python\Python38\")){
+        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";C:\Users\$usuario\AppData\Local\Programs\Python\Python38\", [EnvironmentVariableTarget]::User) 
+    }
 
-    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\platform-tools", [EnvironmentVariableTarget]::User)
+    if (-not ($validaVariavelString -contains "%JAVA_HOME%\bin")){
+        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%JAVA_HOME%\bin", [EnvironmentVariableTarget]::User)
+    }
 
-    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\tools", [EnvironmentVariableTarget]::User)
+    if(-not($validaVariavelString -contains "%ANDROID_HOME%\bin")){
+        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\bin", [EnvironmentVariableTarget]::User)
+    }    
+    
+    if(-not ($validaVariavelString -contains "%ANDROID_HOME%\platform-tools")){
+        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\platform-tools", [EnvironmentVariableTarget]::User)
+    }
+    
+    if (-not ($validaVariavelString -contains "%ANDROID_HOME%\tools")){
+        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\tools", [EnvironmentVariableTarget]::User)
+    }
 
-    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\cmdline-tools", [EnvironmentVariableTarget]::User)
+    if (-not ($validaVariavelString -contains "%ANDROID_HOME%\cmdline-tools")){
+        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\cmdline-tools", [EnvironmentVariableTarget]::User)
+    }
 
-    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";C:\Users\$usuario\AppData\Local\Android\Sdk", [EnvironmentVariableTarget]::User)
+    if(-not ($validaVariavelString -contains "C:\Users\$usuario\AppData\Roaming\npm")){
+        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";C:\Users\$usuario\AppData\Roaming\npm", [EnvironmentVariableTarget]::User)
+    }
+    
+    if(-not ($validaVariavelString -contains "C:\Program Files\nodejs")){
+        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";C:\Program Files\nodejs", [EnvironmentVariableTarget]::User)
+    }
 
-    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";C:\Users\$usuario\AppData\Roaming\npm", [EnvironmentVariableTarget]::User)
-
-    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";C:\Program Files\nodejs", [EnvironmentVariableTarget]::User)       
+    if(-not ($validaVariavelString -contains "C:\Users\anderson.sylvestre\AppData\Local\Android\Sdk")){
+        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";C:\Users\$usuario\AppData\Local\Android\Sdk", [EnvironmentVariableTarget]::User)
+    }
+           
 }
 
 # instalando Appium
@@ -236,8 +273,8 @@ function limpandoAmbiente {
 
 #=========================================================================
 CriandoPastaInstalacao
-InstalandoPython
 IntalarNodeJs
+InstalandoPython
 InstandoJava
 InstallGit
 instalandoAndroidStudio
