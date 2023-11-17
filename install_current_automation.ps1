@@ -150,60 +150,36 @@ function installAppiumInstpector {
 function setVariaviesSistema  {
     Write-Output "Conigurando as variaveis de ambiente sistema ..."
     [Environment]::SetEnvironmentVariable('JAVA_HOME', 'C:\Program Files\OpenLogic\jdk-8.0.392.08-hotspot\', 'Machine')
-    [Environment]::SetEnvironmentVariable("ANDROID_HOME", "C:\Users\" + $usuario + "\AppData\Local\Android\Sdk", "Machine")  
-    #[Environment]::SetEnvironmentVariable('Path', '%SystemRoot%\system32' + ';%SystemRoot%' + ';%SystemRoot%\System32\Wbem' + ';%SYSTEMROOT%\System32\WindowsPowerShell\v1.0\' + ';%SYSTEMROOT%\System32\OpenSSH\' + ';C:\Program Files\OpenLogic\jdk-8.0.392.08-hotspot\bin' + ';C:\Program Files\Git\cmd' + ';C:\Program Files\nodejs\', 'Machine')  
-
+    [Environment]::SetEnvironmentVariable("ANDROID_HOME", "C:\Users\" + $usuario + "\AppData\Local\Android\Sdk", "Machine")
+    
     [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";C:\Program Files\OpenLogic\jdk-8.0.392.08-hotspot\bin", [EnvironmentVariableTarget]::Machine)
 
     [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";C:\Program Files\Git\cmd", [EnvironmentVariableTarget]::Machine)
 
     [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";C:\Program Files\nodejs\", [EnvironmentVariableTarget]::Machine)
 
-
     
-        
-
-    #Write-Output "Conigurando as variaveis de ambiente usuario ..."
-    #[Environment]::SetEnvironmentVariable("Path", "C:\Users\$usuario\AppData\Local\Programs\Microsoft VS Code\bin" + ";C:\Users\$usuario\AppData\Local\Programs\Python\Python38\Scripts\" + ";C:\Users\$usuario\AppData\Local\Programs\Python\Python38\" + ";%USERPROFILE%\AppData\Local\Microsoft\WindowsApps" +";%JAVA_HOME%\bin" + ";%ANDROID_HOME%\bin" + ";%ANDROID_HOME%\platform-tools" + ";%ANDROID_HOME%\tools" + ";%ANDROID_HOME%\cmdline-tools" + ";C:\Users\$usuario\AppData\Local\Android\Sdk" + ";C:\Users\$usuario\AppData\Roaming\npm" + ";C:\Program Files\nodejs", [System.EnvironmentVariableTarget]::User)
-
-
-
-    #========================================================================================= todo
-    #Write-Output "Conigurando as variaveis de ambiente sistema ..."
-    #[Environment]::SetEnvironmentVariable('JAVA_HOME', 'C:\Program Files\OpenLogic\jdk-8.0.392.08-hotspot\', 'Machine')
-    #[Environment]::SetEnvironmentVariable("ANDROID_HOME", "C:\Users\" + $usuario + "\AppData\Local\Android\Sdk", "Machine")  
-    
-    #$vairavel_ambiente = (";C:\Program Files\OpenLogic\jdk-8.0.392.08-hotspot\bin",";C:\Program Files\Git\cmd", ";C:\Program Files\nodejs\")
-
-    #foreach ($ambiente in $vairavel_ambiente ) {
-    #    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + $ambiente,
-    #    [EnvironmentVariableTarget]::Machine)
-    #    Write-Output "Configurando a variavel de ambiente " + $ambiente
-    #}
-     
     Write-Output "Conigurando as variaveis de ambiente usuario ..."
-    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";C:\Users\$usuario\AppData\Local\Programs\Python\Python38\Scripts\", [EnvironmentVariableTarget]::User)   
 
-    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";C:\Users\$usuario\AppData\Local\Programs\Python\Python38\", [EnvironmentVariableTarget]::User) 
+    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";C:\Users\$usuario\AppData\Local\Programs\Python\Python38\Scripts\", [EnvironmentVariableTarget]::User) 
 
-    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";%JAVA_HOME%\bin", [EnvironmentVariableTarget]::User) 
+    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";C:\Users\$usuario\AppData\Local\Programs\Python\Python38\", [EnvironmentVariableTarget]::User) 
 
-    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";%ANDROID_HOME%\bin", [EnvironmentVariableTarget]::User) 
+    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%JAVA_HOME%\bin", [EnvironmentVariableTarget]::User)
 
-    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";%ANDROID_HOME%\platform-tools", [EnvironmentVariableTarget]::User) 
+    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\bin", [EnvironmentVariableTarget]::User)
 
-    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";%ANDROID_HOME%\tools", [EnvironmentVariableTarget]::User) 
+    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\platform-tools", [EnvironmentVariableTarget]::User)
 
-    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";%ANDROID_HOME%\cmdline-tools", [EnvironmentVariableTarget]::User) 
+    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\tools", [EnvironmentVariableTarget]::User)
 
-    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";C:\Users\$usuario\AppData\Local\Android\Sdk", [EnvironmentVariableTarget]::User) 
+    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\cmdline-tools", [EnvironmentVariableTarget]::User)
 
-    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";C:\Users\$usuario\AppData\Roaming\npm", [EnvironmentVariableTarget]::User) 
+    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";C:\Users\$usuario\AppData\Local\Android\Sdk", [EnvironmentVariableTarget]::User)
 
-    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";C:\Program Files\nodejs", [EnvironmentVariableTarget]::User)
+    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";C:\Users\$usuario\AppData\Roaming\npm", [EnvironmentVariableTarget]::User)
 
-    #[Environment]::SetEnvironmentVariable("Path", "C:\Users\$usuario\AppData\Local\Programs\Microsoft VS Code\bin" + ";C:\Users\$usuario\AppData\Local\Programs\Python\Python38\Scripts\" + ";C:\Users\$usuario\AppData\Local\Programs\Python\Python38\" + ";%USERPROFILE%\AppData\Local\Microsoft\WindowsApps" +";%JAVA_HOME%\bin" + ";%ANDROID_HOME%\bin" + ";%ANDROID_HOME%\platform-tools" + ";%ANDROID_HOME%\tools" + ";%ANDROID_HOME%\cmdline-tools" + ";C:\Users\$usuario\AppData\Local\Android\Sdk" + ";C:\Users\$usuario\AppData\Roaming\npm" + ";C:\Program Files\nodejs", [System.EnvironmentVariableTarget]::User)
-       
+    [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";C:\Program Files\nodejs", [EnvironmentVariableTarget]::User)       
 }
 
 # instalando Appium
