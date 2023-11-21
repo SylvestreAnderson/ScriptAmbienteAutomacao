@@ -222,7 +222,7 @@ function setVariaviesSistema  {
         [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";C:\Program Files\nodejs", [EnvironmentVariableTarget]::User)
     }
 
-    if(-not ($validaVariavelString -contains "C:\Users\anderson.sylvestre\AppData\Local\Android\Sdk")){
+    if(-not ($validaVariavelString -contains "C:\Users\$usuario\AppData\Local\Android\Sdk")){
         [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";C:\Users\$usuario\AppData\Local\Android\Sdk", [EnvironmentVariableTarget]::User)
     }
            
