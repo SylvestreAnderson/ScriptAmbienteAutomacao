@@ -13,6 +13,15 @@ function CriandoPastaInstalacao {
     }         
 } 
 
+function CriandoPastaProjetos {
+    if(Test-Path -Path "C:\projetos"){
+        Write-Output "Pasta Projetos Existente!"
+    } else {
+        mkdir "C:\Projetos"
+        Write-Output "Pasta Projetos Criada com sucesso!"
+    }         
+}
+
 ## intalando o node
 function IntalarNodeJs {
     if(Test-Path -Path "C:\Program Files\nodejs"){
@@ -231,6 +240,16 @@ function instalandoAppium {
     }
 }
 
+function BaixandooProjeto {
+    if(-not(Test-Path "C:\projetos\automacao-meu-bmg")){
+        Set-Location "C:\projetos"
+        git clone http://gitlab.bancobmg.com.br/digital/qa/automacao-meu-bmg.git
+    }    
+   
+    
+}
+
+#instalando os pacotes Robot
 function instalandoPacotesRobot {
 
     if(Test-Path "C:\Users\$usuario\AppData\Local\Programs\Python\Python38"){
@@ -238,7 +257,10 @@ function instalandoPacotesRobot {
         python.exe -m pip install --upgrade pip
 
         Write-Output "Instalando os pacotes do Robot Aguarde..."
-        #pip install -r requirements.txt
+        if(Test-Path "C:\projetos\automacao-meu-bmg"){
+            Set-Location "C:\projetos\automacao-meu-bmg" 
+            pip install -r Requirements.txt
+        }        
         pip install robotframework
         pip install robotframework-seleniumlibrary
         pip install robotframework-requests
@@ -272,16 +294,28 @@ function limpandoAmbiente {
 
 
 #=========================================================================
-CriandoPastaInstalacao
-IntalarNodeJs
-InstalandoPython
-InstandoJava
-InstallGit
-instalandoAndroidStudio
-setVariaviesSistema
-atualizaTerminalEmExecucao
-instalandoAppium
-installAppiumInstpector
-instalandoPacotesRobot
-atualizaTerminalEmExecucao
-limpandoAmbiente
+# Verificar se o Usuário é administrador da maquina
+
+$validarUsuario = [System.Security.Principal.WindowsIdentity]::GetCurrent().groups -match "S-1-5-32-544"
+ 
+if ($validarUsuario){
+    Write-Output 'Iniciando a instalacao Aguarde...'
+    CriandoPastaInstalacao
+    CriandoPastaProjetos
+    BaixandooProjeto
+    IntalarNodeJs
+    InstalandoPython
+    InstandoJava
+    InstallGit
+    instalandoAndroidStudio
+    setVariaviesSistema
+    atualizaTerminalEmExecucao
+    instalandoAppium
+    installAppiumInstpector
+    instalandoPacotesRobot
+    atualizaTerminalEmExecucao
+    limpandoAmbiente
+} else {
+    Write-Output 'Usuario nao esta com permissao de adm, por favor procure o suporte!'
+}
+
