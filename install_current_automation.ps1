@@ -60,7 +60,7 @@ function InstalandoPython {
     
             if(Test-Path "C:\programasAutomacao\Python3.8.8.exe"){
                 Write-Output "Instalando o Python3.8.8 na maquina Aguarde..."
-                Start-Process "C:\programasAutomacao\Python3.8.8.exe" -ArgumentList "/quiet"
+                Start-Process "C:\programasAutomacao\Python3.8.8.exe" "/quiet Include_pip=1 PrependPath=1 "
                 Write-Output "Instalacao do Python3.8.8 concluida"
             }
     }  
@@ -185,14 +185,6 @@ function setVariaviesSistema  {
     $valida_Variavel_Path_User = [Environment]::GetEnvironmentVariable("Path", "User")
 
     $validaVariavelString = $Valida_Variavel_Path_User -split ";"
-
-    if(-not ($validaVariavelString -contains "C:\Users\$usuario\AppData\Local\Programs\Python\Python38\Scripts\")){
-        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";C:\Users\$usuario\AppData\Local\Programs\Python\Python38\Scripts\", [EnvironmentVariableTarget]::User) 
-    }
-
-    if (-not ($validaVariavelString -contains "C:\Users\$usuario\AppData\Local\Programs\Python\Python38\")){
-        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";C:\Users\$usuario\AppData\Local\Programs\Python\Python38\", [EnvironmentVariableTarget]::User) 
-    }
 
     if (-not ($validaVariavelString -contains "%JAVA_HOME%\bin")){
         [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%JAVA_HOME%\bin", [EnvironmentVariableTarget]::User)
