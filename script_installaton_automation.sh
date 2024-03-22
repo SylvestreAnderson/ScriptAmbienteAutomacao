@@ -23,7 +23,7 @@ function criandoPastaInstalacao(){
 function vsCode(){
 
 
-    if [ ! /bin/code ];
+    if [ ! -f /bin/code ];
     then
          #https://code.visualstudio.com/docs/setup/linux
 
@@ -43,7 +43,14 @@ function vsCode(){
     fi
 }
 
+function nodejs(){
+    echo "Instando o nodejs"
+    curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+    sudo apt-get install nodejs -y
+    sudo apt install npm -y
+}
+
 criandoPastaInstalacao
 vsCode
-
+nodejs
 
