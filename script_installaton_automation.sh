@@ -44,13 +44,62 @@ function vsCode(){
 }
 
 function nodejs(){
-    echo "Instando o nodejs"
-    curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-    sudo apt-get install nodejs -y
-    sudo apt install npm -y
+    if [ ! -f /bin/nodejs ]
+    then
+        echo "Instando o nodejs"
+        curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+        sudo apt-get install nodejs -y
+        sudo apt install npm -y
+    else 
+        echo "Nodejs já instalado na maquina"
+    fi
+    
+}
+
+function java(){
+    
+    if [ ! -f /bin/java ]
+    then
+        echo "Iniciando a instalado do Java 19"
+        sudo apt install openjdk-19-jre-headless
+    else
+        echo "Java já instalado na maquina"
+    fi
+}
+
+function python(){
+    if [ ! -f /bin/python3 ]
+    then
+        echo "Instalando o python3"
+        sudo apt-get install python3
+    else    
+        echo "Python 3 já instalado"
+    fi
+
+    if [ ! -f /bin/pip3.10  ]
+    then
+        echo "Instalando o Pip na maquina"    
+        sudo apt-get install python3-pip
+    else
+        echo "Pip já instalado na maquin"
+    fi        
+}
+
+function git(){
+    if [ ! -f /bin/git ]
+    then
+        echo "Instalando o git na maquina"
+        sudo apt install git
+    else
+        echo "Git já instalado na maquina"
+    fi        
 }
 
 criandoPastaInstalacao
 vsCode
 nodejs
+java
+python
+git
+
 
