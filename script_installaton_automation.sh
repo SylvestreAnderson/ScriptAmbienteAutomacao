@@ -71,7 +71,7 @@ function python(){
     if [ ! -f /bin/python3 ]
     then
         echo "Instalando o python3"
-        sudo apt-get install python3
+        sudo apt-get install python3 -y
     else    
         echo "Python 3 já instalado"
     fi
@@ -79,9 +79,9 @@ function python(){
     if [ ! -f /bin/pip3.10  ]
     then
         echo "Instalando o Pip na maquina"    
-        sudo apt-get install python3-pip
+        sudo apt-get install python3-pip -y
     else
-        echo "Pip já instalado na maquin"
+        echo "Pip já instalado na maquina"
     fi        
 }
 
@@ -89,7 +89,7 @@ function git(){
     if [ ! -f /bin/git ]
     then
         echo "Instalando o git na maquina"
-        sudo apt install git
+        sudo apt install git -y
     else
         echo "Git já instalado na maquina"
     fi        
