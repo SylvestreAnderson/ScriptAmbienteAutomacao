@@ -4,6 +4,8 @@ usuario=$(whoami)
 
 echo "Usuário Logado: "$usuario 
 
+echo /home/$usuario/Android 
+
 
 function criandoPastaInstalacao(){
         
@@ -96,12 +98,20 @@ function git(){
 }
 
 function andoridStudio() {
-    sudo apt-get update 
-    sudo snap install android-studio --classic -y
-    sudo add-apt-repository ppa:maarten-fonville/android-studio -y
-    sudo apt-get update
-    sudo apt install android-studio -y  
-    #documentation: https://www.educative.io/answers/how-to-install-android-studio-in-ubuntu 
+
+    if [ ! -d /home/$usuario/Android ]
+    then
+        echo "Instalando o Android Studio"
+        sudo apt-get update 
+        sudo snap install android-studio --classic -y
+        sudo add-apt-repository ppa:maarten-fonville/android-studio -y
+        sudo apt-get update
+        sudo apt install android-studio -y  
+        #documentation: https://www.educative.io/answers/how-to-install-android-studio-in-ubuntu 
+    else
+        echo "Android Studio Já instalado na maquina"
+    fi
+    
 }
 
 criandoPastaInstalacao
