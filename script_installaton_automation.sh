@@ -61,7 +61,7 @@ function java(){
     if [ ! -f /bin/java ]
     then
         echo "Iniciando a instalado do Java 19"
-        sudo apt install openjdk-19-jre-headless
+        sudo apt install openjdk-19-jre-headless -y
     else
         echo "Java já instalado na maquina"
     fi
@@ -95,11 +95,21 @@ function git(){
     fi        
 }
 
+function andoridStudio() {
+    sudo apt-get update 
+    sudo snap install android-studio --classic -y
+    sudo add-apt-repository ppa:maarten-fonville/android-studio -y
+    sudo apt-get update
+    sudo apt install android-studio -y  
+    #documentation: https://www.educative.io/answers/how-to-install-android-studio-in-ubuntu 
+}
+
 criandoPastaInstalacao
 vsCode
 nodejs
 java
 python
 git
+andoridStudio
 
 
