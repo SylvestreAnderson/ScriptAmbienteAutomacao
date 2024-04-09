@@ -99,7 +99,7 @@ function git(){
 
 function andoridStudio() {
 
-    if [ ! -d /home/$usuario/Android ]
+    if [ ! -d /opt/android-studio ]
     then
         echo "Instalando o Android Studio"
         sudo apt-get update 
