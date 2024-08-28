@@ -30,14 +30,14 @@ function IntalarNodeJs {
         Set-Location "C:\programasAutomacao"
         sleep (3)
         if(Test-Path -Path "C:\programasAutomacao"){
-            if(-not (Test-Path "C:\programasAutomacao\node-v18.18.2-x64.msi")){
-                Write-Output "Baixando o instalador do NodeJs versao 18.18.2 Aguarde..."
-                Invoke-WebRequest -Uri "https://nodejs.org/dist/v18.18.2/node-v18.18.2-x64.msi" -OutFile "node-v18.18.2-x64.msi" -UseBasicParsing
+            if(-not (Test-Path "C:\programasAutomacao\node-v20.16.0-x64.msi")){
+                Write-Output "Baixando o instalador do NodeJs versao 20.16.0 Aguarde..."
+                Invoke-WebRequest -Uri "https://nodejs.org/dist/v20.16.0/node-v20.16.0-x64.msi" -OutFile "node-v20.16.0-x64.msi" -UseBasicParsing
             }
     
-            if(Test-Path "C:\programasAutomacao\node-v18.18.2-x64.msi"){
+            if(Test-Path "C:\programasAutomacao\node-v20.16.0-x64.msi"){
                 Write-Output "Instalando o Node.js na maquina Aguarde..."
-                $arguments = "/i C:\programasAutomacao\node-v18.18.2-x64.msi /quiet"
+                $arguments = "/i C:\programasAutomacao\node-v20.16.0-x64.msi /quiet"
                 Start-Process msiexec.exe -ArgumentList $arguments -Wait
                 Write-Output "Instalacao do Node.js concluida!"
             }
@@ -46,22 +46,22 @@ function IntalarNodeJs {
     }     
 }
 
-## Baixando e instalado o Python 3.8.8
+## Baixando e instalado o Python 
 function InstalandoPython {
-    if(Test-Path "C:\Users\$usuario\AppData\Local\Programs\Python\Python38"){
-        Write-Output "Python 3.8.8 ja instalado na maquina!"
+    if(Test-Path "C:\Users\$usuario\AppData\Local\Programs\Python\Python3.12"){
+        Write-Output "Python 3.12 ja instalado na maquina!"
     } else {
         Set-Location "C:\programasAutomacao"
 
-            if(-not (Test-Path "C:\programasAutomacao\Python3.8.8.exe")){
-                Write-Output "Baixando o instalador do Python3.8.8.exe Aguarde..."
-                Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.8.8/python-3.8.8-amd64.exe" -OutFile "Python3.8.8.exe" -UseBasicParsing
+            if(-not (Test-Path "C:\programasAutomacao\python-3.12.5-amd64.exe")){
+                Write-Output "Baixando o instalador do python-3.12.5-amd64.exe Aguarde..."
+                Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.12.5/python-3.12.5-amd64.exe" -OutFile "python-3.12.5-amd64.exe" -UseBasicParsing
             }
     
-            if(Test-Path "C:\programasAutomacao\Python3.8.8.exe"){
-                Write-Output "Instalando o Python3.8.8 na maquina Aguarde..."
-                Start-Process "C:\programasAutomacao\Python3.8.8.exe" "/quiet Include_pip=1 PrependPath=1 "
-                Write-Output "Instalacao do Python3.8.8 concluida"
+            if(Test-Path "C:\programasAutomacao\python-3.12.5-amd64.exe"){
+                Write-Output "Instalando o python-3.12.5-amd64 na maquina Aguarde..."
+                Start-Process "C:\programasAutomacao\python-3.12.5-amd64.exe" "/quiet Include_pip=1 PrependPath=1 "
+                Write-Output "Instalacao do python-3.12.5 concluida"
             }
     }  
 }
@@ -69,18 +69,18 @@ function InstalandoPython {
 
 #instalando o Java
 function InstandoJava {
-    if(Test-Path "C:\Program Files\OpenLogic\jdk-8.0.392.08-hotspot"){
-        Write-Output "Java instalado na maquina!"
+    if(Test-Path "C:\Program Files\Microsoft\jdk-21.0.4.7-hotspot"){
+        Write-Output "Java na versão jdk-21.0.4.7 instalado!"
     } else {
         Set-Location "C:\programasAutomacao"
-        if(-not (Test-Path "C:\programasAutomacao\java8u392")){
-            Write-Output "Baixando o Java na versao 1.8.0_392-392 Aguarde..."
-            Invoke-WebRequest -Uri "https://builds.openlogic.com/downloadJDK/openlogic-openjdk/8u392-b08/openlogic-openjdk-8u392-b08-windows-x64.msi" -OutFile "java1.8.0_392-392.msi" -UseBasicParsing
+        if(-not (Test-Path "C:\programasAutomacao\microsoft-jdk-21.0.4-windows-x64.msi")){
+            Write-Output "Baixando o Java na versao jdk-21.0.4 Aguarde..."
+            Invoke-WebRequest -Uri "https://aka.ms/download-jdk/microsoft-jdk-21.0.4-windows-x64.msi" -OutFile "microsoft-jdk-21.0.4-windows-x64.msi" -UseBasicParsing
         } 
 
-        if(Test-Path "C:\programasAutomacao\java1.8.0_392-392.msi"){
-            Write-Output "Instalando o java8u392 na maquina Aguarde..."
-            $arguments = "/i C:\programasAutomacao\java1.8.0_392-392.msi /quiet"
+        if(Test-Path "C:\programasAutomacao\microsoft-jdk-21.0.4-windows-x64.msi"){
+            Write-Output "Instalando o Java na versao jdk-21.0.4.7 na maquina Aguarde..."
+            $arguments = "/i C:\programasAutomacao\microsoft-jdk-21.0.4-windows-x64.msi /quiet"
             Start-Process msiexec.exe -ArgumentList $arguments -Wait
             Write-Output "Instalacao do Java concluida!"
         }
@@ -93,20 +93,7 @@ function InstallGit {
     if(Test-Path -Path "C:\Program Files\Git"){
         Write-Output "Git ja instalado na maquina!"
     } else {
-        Set-Location "C:\programasAutomacao"
-        
-            if(-not (Test-Path "C:\programasAutomacao\Git-2.42.0.2-64-bit.exe")){
-                Write-Output "Baixando o instalador do Git Aguarde..."
-                Invoke-WebRequest -Uri "https://github.com/git-for-windows/git/releases/download/v2.42.0.windows.2/Git-2.42.0.2-64-bit.exe" -OutFile "Git-2.42.0.2-64-bit.exe" -UseBasicParsing
-            }
-    
-            if(Test-Path "C:\programasAutomacao\Git-2.42.0.2-64-bit.exe"){
-                Write-Output "Instalando o Git na maquina Aguarde..."
-                $Install = Start-Process 'C:\programasAutomacao\Git-2.42.0.2-64-bit.exe' -ArgumentList '/VERYSILENT /NORESTART /NOCANCEL /SP- /CLOSEAPPLICATIONS /RESTARTAPPLICATIONS /COMPONENTS="icons,ext\reg\shellhere,assoc,assoc_sh"' -Wait -PassThru
-                while ($Install.ExitCode -eq $null){Sleep 1}
-                Write-Output "Instalacao do Git concluida!"
-            }
-           
+        winget install --id Git.Git -e -h --source winget
     } 
     
 }
@@ -120,7 +107,7 @@ function instalandoAndroidStudio {
 
         if(-not (Test-Path "C:\programasAutomacao\AndroidStudio")){
             Write-Output "Baixando o Android Studio Aguarde..."
-            Invoke-WebRequest -Uri "https://redirector.gvt1.com/edgedl/android/studio/install/2022.3.1.20/android-studio-2022.3.1.20-windows.exe" -OutFile "AndroidStudio.exe" -UseBasicParsing 
+            Invoke-WebRequest -Uri "https://redirector.gvt1.com/edgedl/android/studio/install/2024.1.1.12/android-studio-2024.1.1.12-windows.exe" -OutFile "AndroidStudio.exe" -UseBasicParsing 
         }
 
         if(Test-Path "C:\programasAutomacao\AndroidStudio.exe"){
@@ -130,6 +117,24 @@ function instalandoAndroidStudio {
             Write-Output "Instalacao do Android Studio concluido!"
         }
     }
+    
+}
+
+function instalarMicrosoftVisualC++ {
+    
+    Set-Location "C:\programasAutomacao"
+
+        
+        Write-Output "Baixando o Microsoft Visual C++..."
+            Invoke-WebRequest -Uri "https://aka.ms/vs/17/release/vc_redist.x64.exe" -OutFile "vc_redist.x64.exe" -UseBasicParsing 
+
+    if(Test-Path "C:\programasAutomacao\vc_redist.x64.exe"){
+        Write-Output "Instalando o Microsoft Visual C++ na maquina Aguarde..."
+        $Install = Start-Process "C:\programasAutomacao\vc_redist.x64.exe" -ArgumentList "/S" -PassThru
+        while ($Install.ExitCode -eq $null){Sleep 1} 
+            Write-Output "Instalacao do Microsoft Visual C++ concluido!"
+    }        
+        
     
 }
 
@@ -158,15 +163,15 @@ function installAppiumInstpector {
 
 function setVariaviesSistema  {
     Write-Output "Conigurando as variaveis de ambiente sistema ..."
-    [Environment]::SetEnvironmentVariable('JAVA_HOME', 'C:\Program Files\OpenLogic\jdk-8.0.392.08-hotspot\', 'Machine')
+    [Environment]::SetEnvironmentVariable('JAVA_HOME', 'C:\Program Files\Microsoft\jdk-21.0.4.7-hotspot', 'Machine')
     [Environment]::SetEnvironmentVariable("ANDROID_HOME", "C:\Users\" + $usuario + "\AppData\Local\Android\Sdk", "Machine")
     
     $valida_Variavel_Path_Global = [Environment]::GetEnvironmentVariable("Path", "Machine")
 
     $validaVariavelStringGlobal = $valida_Variavel_Path_Global -split ";"
 
-    if(-not ($validaVariavelStringGlobal -contains "C:\Program Files\OpenLogic\jdk-8.0.392.08-hotspot\bin")){
-        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";C:\Program Files\OpenLogic\jdk-8.0.392.08-hotspot\bin", [EnvironmentVariableTarget]::Machine)
+    if(-not ($validaVariavelStringGlobal -contains "C:\Program Files\Microsoft\jdk-21.0.4.7-hotspot\bin")){
+        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";C:\Program Files\Microsoft\jdk-21.0.4.7-hotspot\bin", [EnvironmentVariableTarget]::Machine)
     }
 
     if(-not ($validaVariavelStringGlobal -contains "C:\Program Files\Git\cmd")){
@@ -190,20 +195,24 @@ function setVariaviesSistema  {
         [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%JAVA_HOME%\bin", [EnvironmentVariableTarget]::User)
     }
 
-    if(-not($validaVariavelString -contains "%ANDROID_HOME%\bin")){
-        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\bin", [EnvironmentVariableTarget]::User)
+    if(-not($validaVariavelString -contains "%ANDROID_HOME%\platform-tools")){
+        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\platform-tools", [EnvironmentVariableTarget]::User)
     }    
     
-    if(-not ($validaVariavelString -contains "%ANDROID_HOME%\platform-tools")){
-        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\platform-tools", [EnvironmentVariableTarget]::User)
+    if(-not ($validaVariavelString -contains "%ANDROID_HOME%\tools")){
+        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + "%ANDROID_HOME%\tools", [EnvironmentVariableTarget]::User)
     }
     
-    if (-not ($validaVariavelString -contains "%ANDROID_HOME%\tools")){
-        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\tools", [EnvironmentVariableTarget]::User)
+    if (-not ($validaVariavelString -contains "%ANDROID_HOME%\build-tools")){
+        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\build-tools", [EnvironmentVariableTarget]::User)
     }
 
     if (-not ($validaVariavelString -contains "%ANDROID_HOME%\cmdline-tools")){
         [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\cmdline-tools", [EnvironmentVariableTarget]::User)
+    }
+
+    if (-not ($validaVariavelString -contains "%ANDROID_HOME%\emulator")){
+        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\emulator", [EnvironmentVariableTarget]::User)
     }
 
     if(-not ($validaVariavelString -contains "C:\Users\$usuario\AppData\Roaming\npm")){
@@ -232,10 +241,12 @@ function instalandoAppium {
     }
 }
 
+
+
 function BaixandooProjeto {
-    if(-not(Test-Path "C:\projetos\automacao-meu-bmg")){
+    if(-not(Test-Path "C:\projetos\cnmb-qa-automacao")){
         Set-Location "C:\projetos"
-        git clone http://gitlab.bancobmg.com.br/digital/qa/automacao-meu-bmg.git
+        git clone git@gitlab.bancobmg.com.br:digital/qa/automacao-meu-bmg.git
     }    
    
     
@@ -249,8 +260,8 @@ function instalandoPacotesRobot {
         python.exe -m pip install --upgrade pip
 
         Write-Output "Instalando os pacotes do Robot Aguarde..."
-        if(Test-Path "C:\projetos\automacao-meu-bmg"){
-            Set-Location "C:\projetos\automacao-meu-bmg" 
+        if(Test-Path "C:\projetos\cnmb-qa-automacao"){
+            Set-Location "C:\projetos\cnmb-qa-automacao" 
             pip install -r Requirements.txt
         }        
         pip install robotframework
@@ -294,19 +305,20 @@ if ($validarUsuario){
     Write-Output 'Iniciando a instalacao Aguarde...'
     CriandoPastaInstalacao
     CriandoPastaProjetos
-    BaixandooProjeto
-    IntalarNodeJs
-    InstalandoPython
-    InstandoJava
-    InstallGit
-    instalandoAndroidStudio
-    setVariaviesSistema
-    atualizaTerminalEmExecucao
-    instalandoAppium
-    installAppiumInstpector
-    instalandoPacotesRobot
-    atualizaTerminalEmExecucao
-    limpandoAmbiente
+    #BaixandooProjeto
+    #IntalarNodeJs
+    #InstalandoPython
+    #InstandoJava
+    #InstallGit
+    #instalandoAndroidStudio
+    #setVariaviesSistema
+    #atualizaTerminalEmExecucao
+    #instalandoAppium
+    #installAppiumInstpector
+    #instalandoPacotesRobot
+    #instalarMicrosoftVisualC++
+    #atualizaTerminalEmExecucao
+    #limpandoAmbiente
 } else {
     Write-Output 'Usuario nao esta com permissao de adm, por favor procure o suporte!'
 }
