@@ -305,20 +305,20 @@ if ($validarUsuario){
     Write-Output 'Iniciando a instalacao Aguarde...'
     CriandoPastaInstalacao
     CriandoPastaProjetos
-    #BaixandooProjeto
-    #IntalarNodeJs
-    #InstalandoPython
-    #InstandoJava
-    #InstallGit
-    #instalandoAndroidStudio
-    #setVariaviesSistema
-    #atualizaTerminalEmExecucao
-    #instalandoAppium
-    #installAppiumInstpector
-    #instalandoPacotesRobot
-    #instalarMicrosoftVisualC++
-    #atualizaTerminalEmExecucao
-    #limpandoAmbiente
+    BaixandooProjeto
+    IntalarNodeJs
+    InstalandoPython
+    InstandoJava
+    InstallGit
+    instalandoAndroidStudio
+    setVariaviesSistema
+    atualizaTerminalEmExecucao
+    instalandoAppium
+    installAppiumInstpector
+    instalandoPacotesRobot
+    instalarMicrosoftVisualC++
+    atualizaTerminalEmExecucao
+    limpandoAmbiente
 } else {
     Write-Output 'Usuario nao esta com permissao de adm, por favor procure o suporte!'
 }
