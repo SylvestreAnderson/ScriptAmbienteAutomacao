@@ -48,20 +48,20 @@ function IntalarNodeJs {
 
 ## Baixando e instalado o Python 
 function InstalandoPython {
-    if(Test-Path "C:\Users\$usuario\AppData\Local\Programs\Python\Python3.12"){
-        Write-Output "Python 3.12 ja instalado na maquina!"
+    if(Test-Path "C:\Users\$usuario\AppData\Local\Programs\Python\Python38"){
+        Write-Output "Python 3.8 ja instalado na maquina!"
     } else {
         Set-Location "C:\programasAutomacao"
 
-            if(-not (Test-Path "C:\programasAutomacao\python-3.12.5-amd64.exe")){
-                Write-Output "Baixando o instalador do python-3.12.5-amd64.exe Aguarde..."
-                Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.12.5/python-3.12.5-amd64.exe" -OutFile "python-3.12.5-amd64.exe" -UseBasicParsing
+            if(-not (Test-Path "C:\programasAutomacao\python-3.8.8-amd64.exe")){
+                Write-Output "Baixando o instalador do python-3.8.8-amd64.exe Aguarde..."
+                Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.8.8/python-3.8.8-amd64.exe" -OutFile "python-3.8.8-amd64.exe" -UseBasicParsing
             }
     
-            if(Test-Path "C:\programasAutomacao\python-3.12.5-amd64.exe"){
-                Write-Output "Instalando o python-3.12.5-amd64 na maquina Aguarde..."
-                Start-Process "C:\programasAutomacao\python-3.12.5-amd64.exe" "/quiet Include_pip=1 PrependPath=1 "
-                Write-Output "Instalacao do python-3.12.5 concluida"
+            if(Test-Path "C:\programasAutomacao\python-3.8.8-amd64.exe"){
+                Write-Output "Instalando o python-3.8.8-amd64.exe na maquina Aguarde..."
+                Start-Process "C:\programasAutomacao\python-3.8.8-amd64.exe" "/quiet Include_pip=1 PrependPath=1 "
+                Write-Output "Instalacao do python-3.8.8-amd64.exe concluida"
             }
     }  
 }
@@ -70,7 +70,7 @@ function InstalandoPython {
 #instalando o Java
 function InstandoJava {
     if(Test-Path "C:\Program Files\Microsoft\jdk-21.0.4.7-hotspot"){
-        Write-Output "Java na versão jdk-21.0.4.7 instalado!"
+        Write-Output "Java na versao jdk-21.0.4.7 instalado!"
     } else {
         Set-Location "C:\programasAutomacao"
         if(-not (Test-Path "C:\programasAutomacao\microsoft-jdk-21.0.4-windows-x64.msi")){
@@ -121,19 +121,24 @@ function instalandoAndroidStudio {
 }
 
 function instalarMicrosoftVisualC++ {
-    
-    Set-Location "C:\programasAutomacao"
 
+    if(Test-Path "C:\Users\$usuario\AppData\Local\Microsoft\VisualStudio")
+    {
+        Write-Output "Microsoft Visual C++ ja esta instalado!"
+    } else {    
+        Set-Location "C:\programasAutomacao"
         
         Write-Output "Baixando o Microsoft Visual C++..."
             Invoke-WebRequest -Uri "https://aka.ms/vs/17/release/vc_redist.x64.exe" -OutFile "vc_redist.x64.exe" -UseBasicParsing 
 
-    if(Test-Path "C:\programasAutomacao\vc_redist.x64.exe"){
-        Write-Output "Instalando o Microsoft Visual C++ na maquina Aguarde..."
-        $Install = Start-Process "C:\programasAutomacao\vc_redist.x64.exe" -ArgumentList "/S" -PassThru
-        while ($Install.ExitCode -eq $null){Sleep 1} 
-            Write-Output "Instalacao do Microsoft Visual C++ concluido!"
-    }        
+        if(Test-Path "C:\programasAutomacao\vc_redist.x64.exe"){
+            Write-Output "Instalando o Microsoft Visual C++ na maquina Aguarde..."
+                $Install = Start-Process "C:\programasAutomacao\vc_redist.x64.exe" -ArgumentList "/S" -PassThru
+            while ($Install.ExitCode -eq $null){Sleep 1} 
+                Write-Output "Instalacao do Microsoft Visual C++ concluido!"
+    }   
+         
+}        
         
     
 }
@@ -246,17 +251,57 @@ function instalandoAppium {
 function BaixandooProjeto {
     if(-not(Test-Path "C:\projetos\cnmb-qa-automacao")){
         Set-Location "C:\projetos"
-        git clone git@gitlab.bancobmg.com.br:digital/qa/automacao-meu-bmg.git
+        git clone https://banco-bmg@dev.azure.com/banco-bmg/cnmb/_git/cnmb-qa-automacao
     }    
    
     
+}
+
+function ConfigBrowserStack {
+    if(Test-Path "C:\projetos\cnmb-qa-automacao"){
+        $UserName = Read-Host "Por favor entre com UserName do Browser Stack"
+        $AccessKey = Read-Host "Por favor entre com o Access Key do Browser Stack"
+        
+        if(-not(Test-Path "C:\projetos\cnmb-qa-automacao\android\resources\variables.robot")){
+            Write-Output "Configurando o Browser Stack no projeto"            
+            Set-Location "C:\projetos\cnmb-qa-automacao\android\resources"
+            New-Item -Path . -Name "variables.robot" -ItemType "file" -Value "*** Variables ***
+                `${PLATFORM}`                           bs        ###DETERMINA EM QUAL AMBIENTE RODAR OS TESTES (local, bs)
+                `${LOCAL_URL}`                          http://0.0.0.0:4723/wd/hub
+                `${PLATFORM_VERSION}`                   %{PLATFORM_VERSION=13.0}
+                `${USERNAME_BS}`                        $UserName
+                `${ACCESS_KEY_BS}`                      $AccessKey
+            " 
+        } else {
+            Write-Output "Arquivo variable.robot ja existe na pasta do Android!"
+        }
+
+        if(-not(Test-Path "C:\projetos\cnmb-qa-automacao\ios\resources\variables.robot")){
+            Write-Output "Configurando o Browser Stack no projeto"            
+            Set-Location "C:\projetos\cnmb-qa-automacao\ios\resources"
+            New-Item -Path . -Name "variables.robot" -ItemType "file" -Value "*** Variables ***
+            `${PLATFORM}`                           bs        ###DETERMINA EM QUAL AMBIENTE RODAR OS TESTES (local, bs)
+            `${LOCAL_URL}`                          http://0.0.0.0:4723/wd/hub
+            `${PLATFORM_VERSION}`                   %{PLATFORM_VERSION=13.0}
+            `${USERNAME_BS}`                        $UserName
+            `${ACCESS_KEY_BS}`                      $AccessKey
+            `${UDID}`                               UDID
+            `${DEVICE_NAME}`                        DEVICE_NAME
+            " 
+        } else {
+            Write-Output "Arquivo variable.robot ja existe na pasta do IOS!"
+        }
+        
+
+
+    }   
 }
 
 #instalando os pacotes Robot
 function instalandoPacotesRobot {
 
     if(Test-Path "C:\Users\$usuario\AppData\Local\Programs\Python\Python38"){
-        Write-Output "Atualizando a versão do Pip na maquina Aguarde..."
+        Write-Output "Atualizando a versao do Pip na maquina Aguarde..."
         python.exe -m pip install --upgrade pip
 
         Write-Output "Instalando os pacotes do Robot Aguarde..."
@@ -303,22 +348,23 @@ $validarUsuario = [System.Security.Principal.WindowsIdentity]::GetCurrent().grou
  
 if ($validarUsuario){
     Write-Output 'Iniciando a instalacao Aguarde...'
-    CriandoPastaInstalacao
-    CriandoPastaProjetos
-    BaixandooProjeto
-    IntalarNodeJs
-    InstalandoPython
-    InstandoJava
-    InstallGit
-    instalandoAndroidStudio
-    setVariaviesSistema
-    atualizaTerminalEmExecucao
-    instalandoAppium
-    installAppiumInstpector
-    instalandoPacotesRobot
-    instalarMicrosoftVisualC++
-    atualizaTerminalEmExecucao
-    limpandoAmbiente
+    #CriandoPastaInstalacao
+    #CriandoPastaProjetos
+    #BaixandooProjeto
+    #IntalarNodeJs
+    #InstalandoPython
+    #InstandoJava
+    #InstallGit
+    #instalandoAndroidStudio
+    #setVariaviesSistema
+    #atualizaTerminalEmExecucao
+    #instalandoAppium
+    #installAppiumInstpector
+    #instalandoPacotesRobot
+    #instalarMicrosoftVisualC++
+    #atualizaTerminalEmExecucao
+    #limpandoAmbiente
+    ConfigBrowserStack
 } else {
     Write-Output 'Usuario nao esta com permissao de adm, por favor procure o suporte!'
 }
