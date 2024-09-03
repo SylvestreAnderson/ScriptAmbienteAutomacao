@@ -349,22 +349,22 @@ $validarUsuario = [System.Security.Principal.WindowsIdentity]::GetCurrent().grou
 if ($validarUsuario){
     Write-Output 'Iniciando a instalacao Aguarde...'
     #CriandoPastaInstalacao
-    #CriandoPastaProjetos
-    #BaixandooProjeto
-    #IntalarNodeJs
-    #InstalandoPython
-    #InstandoJava
-    #InstallGit
+    CriandoPastaProjetos
+    BaixandooProjeto
+    IntalarNodeJs
+    InstalandoPython
+    InstandoJava
+    InstallGit
     #instalandoAndroidStudio
-    #setVariaviesSistema
-    #atualizaTerminalEmExecucao
-    #instalandoAppium
-    #installAppiumInstpector
-    #instalandoPacotesRobot
-    #instalarMicrosoftVisualC++
-    #atualizaTerminalEmExecucao
-    #limpandoAmbiente
+    setVariaviesSistema
+    atualizaTerminalEmExecucao
+    instalandoAppium
+    installAppiumInstpector
+    instalandoPacotesRobot
+    instalarMicrosoftVisualC++
     ConfigBrowserStack
+    atualizaTerminalEmExecucao
+    limpandoAmbiente
 } else {
     Write-Output 'Usuario nao esta com permissao de adm, por favor procure o suporte!'
 }
