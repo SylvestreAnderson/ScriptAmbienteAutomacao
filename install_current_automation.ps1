@@ -48,20 +48,20 @@ function IntalarNodeJs {
 
 ## Baixando e instalado o Python 
 function InstalandoPython {
-    if(Test-Path "C:\Users\$usuario\AppData\Local\Programs\Python\Python38"){
-        Write-Output "Python 3.8 ja instalado na maquina!"
+    if(Test-Path "C:\Users\$usuario\AppData\Local\Programs\Python"){
+        Write-Output "Python ja instalado na maquina!"
     } else {
         Set-Location "C:\programasAutomacao"
 
-            if(-not (Test-Path "C:\programasAutomacao\python-3.8.8-amd64.exe")){
-                Write-Output "Baixando o instalador do python-3.8.8-amd64.exe Aguarde..."
-                Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.8.8/python-3.8.8-amd64.exe" -OutFile "python-3.8.8-amd64.exe" -UseBasicParsing
+            if(-not (Test-Path "C:\ProgramasAutomacao\arquivos\python-3.12.6-amd64.exe")){
+                Write-Output "Baixando o instalador do python-3.12.6 Aguarde..."
+                git clone https://github.com/SylvestreAnderson/arquivos.git
             }
     
-            if(Test-Path "C:\programasAutomacao\python-3.8.8-amd64.exe"){
-                Write-Output "Instalando o python-3.8.8-amd64.exe na maquina Aguarde..."
-                Start-Process "C:\programasAutomacao\python-3.8.8-amd64.exe" "/quiet Include_pip=1 PrependPath=1 "
-                Write-Output "Instalacao do python-3.8.8-amd64.exe concluida"
+            if(Test-Path "C:\ProgramasAutomacao\arquivos\python-3.12.6-amd64.exe"){
+                Write-Output "Instalando o python-3.12.6 na maquina Aguarde..."
+                Start-Process "C:\ProgramasAutomacao\arquivos\python-3.12.6-amd64.exe" "/quiet Include_pip=1 PrependPath=1 "
+                Write-Output "Instalacao do python-33.12.6 concluida"
             }
     }  
 }
@@ -93,7 +93,20 @@ function InstallGit {
     if(Test-Path -Path "C:\Program Files\Git"){
         Write-Output "Git ja instalado na maquina!"
     } else {
-        winget install --id Git.Git -e -h --source winget
+        Set-Location "C:\programasAutomacao"
+        if(Test-Path -Path "C:\programasAutomacao"){
+            if(-not (Test-Path "C:\programasAutomacao\Git-2.46.2-64-bit.exe")){
+                Write-Output "Baixando o instalador do Git Aguarde..."
+                Invoke-WebRequest -Uri "https://github.com/git-for-windows/git/releases/download/v2.46.2.windows.1/Git-2.46.2-64-bit.exe" -OutFile "Git-2.46.2-64-bit.exe" -UseBasicParsing
+            }
+    
+            if(Test-Path "C:\programasAutomacao\Git-2.46.2-64-bit.exe"){
+                Write-Output "Instalando o Git na maquina Aguarde..."
+                Start-Process "C:\programasAutomacao\Git-2.46.2-64-bit.exe" -ArgumentList "/quiet"
+                Write-Output "Instalacao do Git concluida!"
+            }
+           
+        }
     } 
     
 }
@@ -169,7 +182,9 @@ function installAppiumInstpector {
 function setVariaviesSistema  {
     Write-Output "Conigurando as variaveis de ambiente sistema ..."
     [Environment]::SetEnvironmentVariable('JAVA_HOME', 'C:\Program Files\Microsoft\jdk-21.0.4.7-hotspot', 'Machine')
-    [Environment]::SetEnvironmentVariable("ANDROID_HOME", "C:\Users\" + $usuario + "\AppData\Local\Android\Sdk", "Machine")
+    if(Test-Path "C:\Program Files\Android"){
+        [Environment]::SetEnvironmentVariable("ANDROID_HOME", "C:\Users\" + $usuario + "\AppData\Local\Android\Sdk", "Machine")
+    }
     
     $valida_Variavel_Path_Global = [Environment]::GetEnvironmentVariable("Path", "Machine")
 
@@ -200,25 +215,32 @@ function setVariaviesSistema  {
         [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%JAVA_HOME%\bin", [EnvironmentVariableTarget]::User)
     }
 
-    if(-not($validaVariavelString -contains "%ANDROID_HOME%\platform-tools")){
-        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\platform-tools", [EnvironmentVariableTarget]::User)
-    }    
+    if(Test-Path "C:\Program Files\Android"){
+        if(-not($validaVariavelString -contains "%ANDROID_HOME%\platform-tools")){
+            [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\platform-tools", [EnvironmentVariableTarget]::User)
+        }    
+        
+        if(-not ($validaVariavelString -contains "%ANDROID_HOME%\tools")){
+            [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + "%ANDROID_HOME%\tools", [EnvironmentVariableTarget]::User)
+        }
+        
+        if (-not ($validaVariavelString -contains "%ANDROID_HOME%\build-tools")){
+            [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\build-tools", [EnvironmentVariableTarget]::User)
+        }
     
-    if(-not ($validaVariavelString -contains "%ANDROID_HOME%\tools")){
-        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + "%ANDROID_HOME%\tools", [EnvironmentVariableTarget]::User)
+        if (-not ($validaVariavelString -contains "%ANDROID_HOME%\cmdline-tools")){
+            [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\cmdline-tools", [EnvironmentVariableTarget]::User)
+        }
+    
+        if (-not ($validaVariavelString -contains "%ANDROID_HOME%\emulator")){
+            [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\emulator", [EnvironmentVariableTarget]::User)
+        }
+
+        if(-not ($validaVariavelString -contains "C:\Users\$usuario\AppData\Local\Android\Sdk")){
+            [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";C:\Users\$usuario\AppData\Local\Android\Sdk", [EnvironmentVariableTarget]::User)
+        }
     }
     
-    if (-not ($validaVariavelString -contains "%ANDROID_HOME%\build-tools")){
-        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\build-tools", [EnvironmentVariableTarget]::User)
-    }
-
-    if (-not ($validaVariavelString -contains "%ANDROID_HOME%\cmdline-tools")){
-        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\cmdline-tools", [EnvironmentVariableTarget]::User)
-    }
-
-    if (-not ($validaVariavelString -contains "%ANDROID_HOME%\emulator")){
-        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\emulator", [EnvironmentVariableTarget]::User)
-    }
 
     if(-not ($validaVariavelString -contains "C:\Users\$usuario\AppData\Roaming\npm")){
         [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";C:\Users\$usuario\AppData\Roaming\npm", [EnvironmentVariableTarget]::User)
@@ -226,11 +248,7 @@ function setVariaviesSistema  {
     
     if(-not ($validaVariavelString -contains "C:\Program Files\nodejs")){
         [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";C:\Program Files\nodejs", [EnvironmentVariableTarget]::User)
-    }
-
-    if(-not ($validaVariavelString -contains "C:\Users\$usuario\AppData\Local\Android\Sdk")){
-        [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";C:\Users\$usuario\AppData\Local\Android\Sdk", [EnvironmentVariableTarget]::User)
-    }
+    }  
            
 }
 
@@ -258,19 +276,14 @@ function BaixandooProjeto {
 }
 
 function ConfigBrowserStack {
-    if(Test-Path "C:\projetos\cnmb-qa-automacao"){
+    if(-not(Test-Path "C:\projetos\cnmb-qa-automacao\android\resources\variables.robot") -Or (-not(Test-Path "C:\projetos\cnmb-qa-automacao\ios\resources\variables.robot"))) {
         $UserName = Read-Host "Por favor entre com UserName do Browser Stack"
         $AccessKey = Read-Host "Por favor entre com o Access Key do Browser Stack"
         
         if(-not(Test-Path "C:\projetos\cnmb-qa-automacao\android\resources\variables.robot")){
             Write-Output "Configurando o Browser Stack no projeto"            
             Set-Location "C:\projetos\cnmb-qa-automacao\android\resources"
-            New-Item -Path . -Name "variables.robot" -ItemType "file" -Value "*** Variables ***
-                `${PLATFORM}`                           bs        ###DETERMINA EM QUAL AMBIENTE RODAR OS TESTES (local, bs)
-                `${LOCAL_URL}`                          http://0.0.0.0:4723/wd/hub
-                `${PLATFORM_VERSION}`                   %{PLATFORM_VERSION=13.0}
-                `${USERNAME_BS}`                        $UserName
-                `${ACCESS_KEY_BS}`                      $AccessKey
+            New-Item -Path . -Name "variables.robot" -ItemType "file" -Value "*** Variables ***`n`${PLATFORM}`                           bs        ###DETERMINA EM QUAL AMBIENTE RODAR OS TESTES (local, bs)`n`${LOCAL_URL}`                          http://0.0.0.0:4723/wd/hub`n`${PLATFORM_VERSION}`                   %{PLATFORM_VERSION=13.0}`n`${USERNAME_BS}`                        $UserName`n`${ACCESS_KEY_BS}`                      $AccessKey
             " 
         } else {
             Write-Output "Arquivo variable.robot ja existe na pasta do Android!"
@@ -279,14 +292,8 @@ function ConfigBrowserStack {
         if(-not(Test-Path "C:\projetos\cnmb-qa-automacao\ios\resources\variables.robot")){
             Write-Output "Configurando o Browser Stack no projeto"            
             Set-Location "C:\projetos\cnmb-qa-automacao\ios\resources"
-            New-Item -Path . -Name "variables.robot" -ItemType "file" -Value "*** Variables ***
-            `${PLATFORM}`                           bs        ###DETERMINA EM QUAL AMBIENTE RODAR OS TESTES (local, bs)
-            `${LOCAL_URL}`                          http://0.0.0.0:4723/wd/hub
-            `${PLATFORM_VERSION}`                   %{PLATFORM_VERSION=13.0}
-            `${USERNAME_BS}`                        $UserName
-            `${ACCESS_KEY_BS}`                      $AccessKey
-            `${UDID}`                               UDID
-            `${DEVICE_NAME}`                        DEVICE_NAME
+
+            New-Item -Path . -Name "variables.robot" -ItemType "file" -Value "*** Variables ***`n`${PLATFORM}`                           bs        ###DETERMINA EM QUAL AMBIENTE RODAR OS TESTES (local, bs)`n`${LOCAL_URL}`                          http://0.0.0.0:4723/wd/hub`n`${PLATFORM_VERSION}`                   %{PLATFORM_VERSION=13.0}`n`${USERNAME_BS}`                        $UserName`n`${ACCESS_KEY_BS}`                      $AccessKey`n`${UDID}`                               UDID`n`${DEVICE_NAME}`                        DEVICE_NAME
             " 
         } else {
             Write-Output "Arquivo variable.robot ja existe na pasta do IOS!"
@@ -300,7 +307,7 @@ function ConfigBrowserStack {
 #instalando os pacotes Robot
 function instalandoPacotesRobot {
 
-    if(Test-Path "C:\Users\$usuario\AppData\Local\Programs\Python\Python38"){
+    if(Test-Path "C:\Users\$usuario\AppData\Local\Programs\Python"){
         Write-Output "Atualizando a versao do Pip na maquina Aguarde..."
         python.exe -m pip install --upgrade pip
 
@@ -331,12 +338,15 @@ function atualizaTerminalEmExecucao {
 
 function limpandoAmbiente {
     sleep (3)
-    Write-Output "Removendo a pasta ProgramasAutomacao"
-    Write-Output "Removendo os arquivos desnecessarios Aguarde..."
-    Set-Location "C:\"
-    Remove-Item -Path C:\ProgramasAutomacao -Force -Recurse 
+    if(Test-Path -Path "C:\programasAutomacao"){
+        Write-Output "Removendo a pasta ProgramasAutomacao"
+        Write-Output "Removendo os arquivos desnecessarios Aguarde..."
+        Set-Location "C:\"
+        Remove-Item -Path C:\ProgramasAutomacao -Force -Recurse 
     
-    Write-Output "Instalacao do Ambiente de Automacao concluido!"
+        Write-Output "Instalacao do Ambiente de Automacao concluido!"
+    }
+    
     
 }
 
@@ -348,18 +358,20 @@ $validarUsuario = [System.Security.Principal.WindowsIdentity]::GetCurrent().grou
  
 if ($validarUsuario){
     Write-Output 'Iniciando a instalacao Aguarde...'
-    #CriandoPastaInstalacao
-    CriandoPastaProjetos
-    BaixandooProjeto
+    limpandoAmbiente
+    CriandoPastaInstalacao
+    CriandoPastaProjetos    
     IntalarNodeJs
     InstalandoPython
     InstandoJava
     InstallGit
+    BaixandooProjeto
     #instalandoAndroidStudio
     setVariaviesSistema
     atualizaTerminalEmExecucao
     instalandoAppium
     installAppiumInstpector
+    atualizaTerminalEmExecucao
     instalandoPacotesRobot
     instalarMicrosoftVisualC++
     ConfigBrowserStack
