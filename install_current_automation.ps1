@@ -190,31 +190,21 @@ function setVariaviesSistema  {
 
     $validaVariavelStringGlobal = $valida_Variavel_Path_Global -split ";"
 
-    $variablesGlobal = @('C:\Program Files\Microsoft\jdk-21.0.4.7-hotspot\bin', 'C:\Program Files\Git\cmd','C:\Program Files\nodejs\')
+    $variablesGlobal = @(
+        "C:\Program Files\Microsoft\jdk-21.0.4.7-hotspot\bin",
+        "C:\Program Files\Git\cmd",
+        "C:\Program Files\nodejs\"
+    )    
 
 
-    for(($x = 0); $x -le 2; $x++)
+    for(($x = 0); $x -le $variablesGlobal.Length; $x++)
     {
-        if(-not ($validaVariavelStringGlobal -contains "$variablesGlobal[$x]")){
-            [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";$variablesGlobal[$x]", [EnvironmentVariableTarget]::Machine)
+        Write-Output $variablesGlobal[$x]
+        if(-not ($validaVariavelStringGlobal -contains $variablesGlobal[$x])){
+           [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";"+ $variablesGlobal[$x], [EnvironmentVariableTarget]::Machine)
         }
     }
 
-
-    #if(-not ($validaVariavelStringGlobal -contains "C:\Program Files\Microsoft\jdk-21.0.4.7-hotspot\bin")){
-       # [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";C:\Program Files\Microsoft\jdk-21.0.4.7-hotspot\bin", [EnvironmentVariableTarget]::Machine)
-    #}
-
-    #if(-not ($validaVariavelStringGlobal -contains "C:\Program Files\Git\cmd")){
-      #  [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";C:\Program Files\Git\cmd", [EnvironmentVariableTarget]::Machine)
-    #}
-    
-    #if(-not ($validaVariavelStringGlobal -contains "C:\Program Files\nodejs\")){
-     #   [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";C:\Program Files\nodejs\", [EnvironmentVariableTarget]::Machine)
-    #}
-
-    
-    
     Write-Output "Conigurando as variaveis de ambiente usuario ..."
 
     $valida_Variavel_Path_User = [Environment]::GetEnvironmentVariable("Path", "User")
@@ -222,74 +212,37 @@ function setVariaviesSistema  {
     $validaVariavelString = $Valida_Variavel_Path_User -split ";"
 
     $variablesUser = @(
-        '%JAVA_HOME%\bin',
-        'C:\Users\$usuario\AppData\Roaming\npm',
-        'C:\Program Files\nodejs'
+        "%JAVA_HOME%\bin",
+        "C:\Users\$usuario\AppData\Roaming\npm",
+        "C:\Program Files\nodejs"
     )
 
-    for(($x = 0); $x -le 2; $x++)
+    for(($x = 0); $x -le $variablesUser.Length; $x++)
     {
-        if (-not ($validaVariavelString -contains "$variablesUser[$x]")){
-            [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";$variablesUser[$x]", [EnvironmentVariableTarget]::User)
+        if (-not ($validaVariavelString -contains $variablesUser[$x])){
+            [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";" + $variablesUser[$x], [EnvironmentVariableTarget]::User)
         }
     }
-
-    #if (-not ($validaVariavelString -contains "%JAVA_HOME%\bin")){
-     #   [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%JAVA_HOME%\bin", [EnvironmentVariableTarget]::User)
-    #}
 
     if(Test-Path "C:\Program Files\Android"){
 
         $variablesUserAndroid = @(
-           '%ANDROID_HOME%\platform-tools',
-           '%ANDROID_HOME%\tools',
-           '%ANDROID_HOME%\build-tools',
-           '%ANDROID_HOME%\cmdline-tools',
-           '%ANDROID_HOME%\emulator',
-           'C:\Users\$usuario\AppData\Local\Android\Sdk' 
+           "%ANDROID_HOME%\platform-tools",
+           "%ANDROID_HOME%\tools",
+           "%ANDROID_HOME%\build-tools",
+           "%ANDROID_HOME%\cmdline-tools",
+           "%ANDROID_HOME%\emulator",
+           "C:\Users\$usuario\AppData\Local\Android\Sdk" 
         )
 
-        for(($x = 0); $x -le 4; $x++)
+        for(($x = 0); $x -le $variablesUserAndroid.Length; $x++)
         {
-            if(-not($validaVariavelString -contains "$variablesUserAndroid[$x]")){
-                [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";$variablesUserAndroid[$x]", [EnvironmentVariableTarget]::User)
+            if(-not($validaVariavelString -contains $variablesUserAndroid[$x])){
+                [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";" + $variablesUserAndroid[$x], [EnvironmentVariableTarget]::User)
             }  
         }
-
-        #if(-not($validaVariavelString -contains "%ANDROID_HOME%\platform-tools")){
-         #   [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\platform-tools", [EnvironmentVariableTarget]::User)
-        #}    
-        
-        #if(-not ($validaVariavelString -contains "%ANDROID_HOME%\tools")){
-         #   [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + "%ANDROID_HOME%\tools", [EnvironmentVariableTarget]::User)
-        #}
-        
-        #if (-not ($validaVariavelString -contains "%ANDROID_HOME%\build-tools")){
-         #   [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\build-tools", [EnvironmentVariableTarget]::User)
-        #}
-    
-        #if (-not ($validaVariavelString -contains "%ANDROID_HOME%\cmdline-tools")){
-         #   [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\cmdline-tools", [EnvironmentVariableTarget]::User)
-        #}
-    
-        #if (-not ($validaVariavelString -contains "%ANDROID_HOME%\emulator")){
-         #   [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";%ANDROID_HOME%\emulator", [EnvironmentVariableTarget]::User)
-        #}
-
-        #if(-not ($validaVariavelString -contains "C:\Users\$usuario\AppData\Local\Android\Sdk")){
-         #   [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";C:\Users\$usuario\AppData\Local\Android\Sdk", [EnvironmentVariableTarget]::User)
-        #}
     }
-    
-
-    #if(-not ($validaVariavelString -contains "C:\Users\$usuario\AppData\Roaming\npm")){
-      #  [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";C:\Users\$usuario\AppData\Roaming\npm", [EnvironmentVariableTarget]::User)
-    #}
-    
-    #if(-not ($validaVariavelString -contains "C:\Program Files\nodejs")){
-     #   [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User) + ";C:\Program Files\nodejs", [EnvironmentVariableTarget]::User)
-    #}  
-           
+               
 }
 
 # instalando Appium
@@ -304,15 +257,11 @@ function instalandoAppium {
     }
 }
 
-
-
 function BaixandooProjeto {
     if(-not(Test-Path "C:\projetos\cnmb-qa-automacao")){
         Set-Location "C:\projetos"
         git clone https://banco-bmg@dev.azure.com/banco-bmg/cnmb/_git/cnmb-qa-automacao
-    }    
-   
-    
+    }     
 }
 
 function ConfigBrowserStack {
