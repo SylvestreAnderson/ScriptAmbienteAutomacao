@@ -199,7 +199,6 @@ function setVariaviesSistema  {
 
     for(($x = 0); $x -le $variablesGlobal.Length; $x++)
     {
-        Write-Output $variablesGlobal[$x]
         if(-not ($validaVariavelStringGlobal -contains $variablesGlobal[$x])){
            [Environment]::SetEnvironmentVariable("Path",[Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";"+ $variablesGlobal[$x], [EnvironmentVariableTarget]::Machine)
         }
